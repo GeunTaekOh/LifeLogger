@@ -20,7 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -29,40 +28,39 @@ import static java.lang.System.exit;
 
 public class MainActivity extends Activity {
 
-    final static int interval_time = 1000 * 60 * 3;
-    public static double latitudedouble;
-    public static double longitudedouble;
-    public static ArrayList<Double> alistlatitude = null;
-    public static ArrayList<Double> alistlongitude = null;
-    public static ArrayList<LatLng> alistlocation = null;
-    public static ArrayList<String> alisttodo = null;
-    public static ArrayList<String> alisttext = null;
+    final static int interval_Time = 1000 * 60 * 3;
+    public static double latitudeDouble;
+    public static double longitudeDouble;
+    public static ArrayList<Double> alistLatitude = null;
+    public static ArrayList<Double> alistLongitude = null;
+    public static ArrayList<LatLng> alistLocation = null;
+    public static ArrayList<String> alistTodo = null;
+    public static ArrayList<String> alistText = null;
     public static ArrayList<String> alistTime = null;
-    public static ArrayList<String> alistcategory = null;
+    public static ArrayList<String> alistCategory = null;
     final DBManager dbManager = new DBManager(this, "GPS.db", null, 1);
     ScrollView scroll;
     TextView mDisplayDbEt;
     int iter = 0;
-    MapsActivity mapAct = null;
     MyLocationListener mll = null;
     Location mLocation;
     SQLiteDatabase db;
     private long lastTimeBackPressed;
     private LocationManager locationManager;
-    private GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDisplayDbEt = (TextView) findViewById(R.id.dbtv);
-        alistlatitude = new ArrayList<Double>();
-        alistlongitude = new ArrayList<Double>();
-        alistlocation = new ArrayList<LatLng>();
-        alisttodo = new ArrayList<String>();
-        alisttext = new ArrayList<String>();
+        mDisplayDbEt = (TextView) findViewById(R.id.dbtv);          //이값들을 스태틱 클래스로하나만들기
+        alistLatitude = new ArrayList<Double>();
+        alistLongitude = new ArrayList<Double>();
+        alistLocation = new ArrayList<LatLng>();
+        alistTodo = new ArrayList<String>();
+        alistText = new ArrayList<String>();
         alistTime = new ArrayList<String>();
-        alistcategory = new ArrayList<String>();
+        alistCategory = new ArrayList<String>();
         scroll = (ScrollView) findViewById(R.id.scrollview);
         scroll.setVerticalScrollBarEnabled(true);
 
@@ -79,7 +77,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() - lastTimeBackPressed < 1500) {
+        if (System.currentTimeMillis() - lastTimeBackPressed > 1500 && System.currentTimeMillis() - lastTimeBackPressed < 4500) {
             finish();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
@@ -99,7 +97,7 @@ public class MainActivity extends Activity {
         Toast.makeText(MainActivity.this, "더이상 GPS 정보롤 받아오지 않습니다", Toast.LENGTH_SHORT).show();
     }
 
-    public void onclicklocationbtn(View v) {
+    public void onClickLocationbtn(View v) {
         getLocation();
     }
 
@@ -130,11 +128,11 @@ public class MainActivity extends Activity {
                     .setNegativeButton("취소", null).show();
             Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
         } else {
-            if (isGps) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval_time, 0, mll);
+            if (isNetwork) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval_Time, 0, mll);
                 Toast.makeText(this, "GPS로 좌표값을 가져옵니다", Toast.LENGTH_SHORT).show();
-            } else if (isNetwork) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, interval_time, 0, mll);  //3000 -> 3초
+            } else if (isGps) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, interval_Time, 0, mll);  //3000 -> 3초
                 Toast.makeText(this, "네트워크로 좌표값을 가져옵니다", Toast.LENGTH_SHORT).show();
             } else {
                 exit(1);
@@ -151,18 +149,18 @@ public class MainActivity extends Activity {
             tv.append(str);
             Toast.makeText(getBaseContext(), str, Toast.LENGTH_SHORT).show();
 
-            latitudedouble = location.getLatitude();
-            longitudedouble = location.getLongitude();
+            latitudeDouble = location.getLatitude();
+            longitudeDouble = location.getLongitude();
 
-            dbManager.insert(latitudedouble, longitudedouble);
+            dbManager.insert(latitudeDouble, longitudeDouble);
 
-            alistlatitude.add(iter, latitudedouble);
-            alistlongitude.add(iter, longitudedouble);
-            alistlocation.add(iter, new LatLng(alistlatitude.get(iter), alistlongitude.get(iter)));
-            alisttodo.add(iter, iter + "");
-            alisttext.add(iter, "");
+            alistLatitude.add(iter, latitudeDouble);
+            alistLongitude.add(iter, longitudeDouble);
+            alistLocation.add(iter, new LatLng(alistLatitude.get(iter), alistLongitude.get(iter)));
+            alistTodo.add(iter, iter + "");
+            alistText.add(iter, "");
             alistTime.add(iter, "");
-            alistcategory.add(iter, "");
+            alistCategory.add(iter, "");
             iter++;
             Log.i("저장", "성공");
             dbManager.getResult();
