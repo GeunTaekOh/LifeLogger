@@ -3,6 +3,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import static com.taek_aaa.locationdiary.DataSet.alistCategory;
+import static com.taek_aaa.locationdiary.DataSet.alistLatitude;
+import static com.taek_aaa.locationdiary.DataSet.category_arr;
+
 
 public class List extends Activity {
     int ary[] = new int[4];
@@ -12,42 +16,33 @@ public class List extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        MainActivity mact = new MainActivity();
-        int alsize = mact.alistLatitude.size();
-        int studyNum = 0;
-        int eatNum = 0;
-        int cafeNum = 0;
-        int walkingNum = 0;
+        int alsize = alistLatitude.size();
+        int valueOfCategory[] = new int[category_arr.length];
 
         for(int i=0; i<alsize; i++) {
-            if(mact.alistCategory.get(i).toString().equals("공부")){
-                studyNum++;
+            if(alistCategory.get(i).toString().equals(category_arr[0])){
+                valueOfCategory[0]++;
             }
-            else if (mact.alistCategory.get(i).toString().equals("식사")){
-                eatNum++;
-            }else if(mact.alistCategory.get(i).toString().equals("카페")){
-                cafeNum++;
-            }else if(mact.alistCategory.get(i).toString().equals("산책")){
-                walkingNum++;
+            else if (alistCategory.get(i).toString().equals(category_arr[1])){
+                valueOfCategory[1]++;
+            }else if(alistCategory.get(i).toString().equals(category_arr[2])){
+                valueOfCategory[2]++;
+            }else if(alistCategory.get(i).toString().equals(category_arr[3])){
+                valueOfCategory[3]++;
             }
         }
-        ary[0] = studyNum;
-        arystr[0] = "공부";
-        ary[1] = eatNum;
-        arystr[1] = "식사";
-        ary[2] = cafeNum;
-        arystr[2] = "카페";
-        ary[3] = walkingNum;
-        arystr[3] = "산책";
-
+        for(int i=0; i<category_arr.length; i++){
+            ary[i]=valueOfCategory[i];
+            arystr[i]=category_arr[i];
+        }
         sort();
         setRank();
 
     }
 
     public void sort(){
-        int tmp = 0;
-        String tmpstr = null;
+        int tmp;
+        String tmpstr;
 
         for(int i=0; i<ary.length-1; i++){
             for(int j=i+1; j<ary.length; j++){

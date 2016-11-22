@@ -29,6 +29,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
+import static com.taek_aaa.locationdiary.DataSet.alistCategory;
+import static com.taek_aaa.locationdiary.DataSet.alistLatitude;
+import static com.taek_aaa.locationdiary.DataSet.alistLocation;
+import static com.taek_aaa.locationdiary.DataSet.alistLongitude;
+import static com.taek_aaa.locationdiary.DataSet.alistText;
+import static com.taek_aaa.locationdiary.DataSet.alistTime;
+import static com.taek_aaa.locationdiary.DataSet.alistTodo;
+import static com.taek_aaa.locationdiary.DataSet.category_arr;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -36,7 +44,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     Spinner spinner;
     String type_str = "";
-    String[] memo_arr = {"공부", "식사", "카페", "산책"};   //이것도 같이 data파일만들면 거기에 넣어도 좋을듯
     EditText editText;
     LinearLayout type_ll;
     static String outermemo ;
@@ -63,21 +70,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final MainActivity mact = new MainActivity();
-        int listsize = mact.alistLongitude.size();
+        int listsize = alistLongitude.size();
         slistsize=listsize;
         for (int i = 0; i < listsize; i++) {
             MarkerOptions opt = new MarkerOptions();
-            opt.position(mact.alistLocation.get(i));
-            opt.title(mact.alistTodo.get(i));
-            opt.snippet(mact.alistText.get(i)+"@"+mact.alistTime.get(i));
+            opt.position(alistLocation.get(i));
+            opt.title(alistTodo.get(i));
+            opt.snippet(alistText.get(i)+"@"+alistTime.get(i));
 
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
-                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(mact.alistLatitude.get(i - 1)), Double.valueOf(mact.alistLongitude.get(i - 1))), new LatLng(Double.valueOf(mact.alistLatitude.get(i)), Double.valueOf(mact.alistLongitude.get(i)))).width(5).color(Color.RED));
+                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(alistLatitude.get(i - 1)), Double.valueOf(alistLongitude.get(i - 1))), new LatLng(Double.valueOf(alistLatitude.get(i)), Double.valueOf(alistLongitude.get(i)))).width(5).color(Color.RED));
             }
         }
-        mMap.moveCamera(newLatLng(mact.alistLocation.get(0)));
+        mMap.moveCamera(newLatLng(alistLocation.get(0)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -101,13 +107,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 outermemo = editText.getText().toString();
-                                mact.alistText.set(temp,outermemo);
+                                alistText.set(temp,outermemo);
                                 Log.d("ppp",String.valueOf(temp));
                                 SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
                                 Date clsTime = new Date();
                                 String result = df.format(clsTime);
-                                mact.alistTime.set(temp,result);
-                                mact.alistCategory.set(temp,type_str);
+                                alistTime.set(temp,result);
+                                alistCategory.set(temp,type_str);
                                 temp=0;
                                 type_str = "";
                                 final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -129,7 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void setSpinner() {
         spinner = new Spinner(this);
-        ArrayAdapter memoAdapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_spinner_item, memo_arr);
+        ArrayAdapter memoAdapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_spinner_item, category_arr);
         memoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(memoAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

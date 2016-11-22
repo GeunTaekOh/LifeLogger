@@ -19,11 +19,14 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
-
+import static com.taek_aaa.locationdiary.DataSet.alistCategory;
+import static com.taek_aaa.locationdiary.DataSet.alistLatitude;
+import static com.taek_aaa.locationdiary.DataSet.alistLocation;
+import static com.taek_aaa.locationdiary.DataSet.alistLongitude;
+import static com.taek_aaa.locationdiary.DataSet.alistText;
+import static com.taek_aaa.locationdiary.DataSet.alistTime;
+import static com.taek_aaa.locationdiary.DataSet.alistTodo;
 import static java.lang.System.exit;
 
 public class MainActivity extends Activity {
@@ -31,13 +34,7 @@ public class MainActivity extends Activity {
     final static int interval_Time = 1000 * 60 * 3;
     public static double latitudeDouble;
     public static double longitudeDouble;
-    public static ArrayList<Double> alistLatitude = null;
-    public static ArrayList<Double> alistLongitude = null;
-    public static ArrayList<LatLng> alistLocation = null;
-    public static ArrayList<String> alistTodo = null;
-    public static ArrayList<String> alistText = null;
-    public static ArrayList<String> alistTime = null;
-    public static ArrayList<String> alistCategory = null;
+
     final DBManager dbManager = new DBManager(this, "GPS.db", null, 1);
     ScrollView scroll;
     TextView mDisplayDbEt;
@@ -53,14 +50,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDisplayDbEt = (TextView) findViewById(R.id.dbtv);          //이값들을 스태틱 클래스로하나만들기
-        alistLatitude = new ArrayList<Double>();
-        alistLongitude = new ArrayList<Double>();
-        alistLocation = new ArrayList<LatLng>();
-        alistTodo = new ArrayList<String>();
-        alistText = new ArrayList<String>();
-        alistTime = new ArrayList<String>();
-        alistCategory = new ArrayList<String>();
+        mDisplayDbEt = (TextView) findViewById(R.id.dbtv);
         scroll = (ScrollView) findViewById(R.id.scrollview);
         scroll.setVerticalScrollBarEnabled(true);
 
