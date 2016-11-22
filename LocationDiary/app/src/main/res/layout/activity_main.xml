@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="Stop GPS" />
-
+r
         <Button
             android:id="@+id/viewMapbtn"
             android:layout_width="wrap_content"
