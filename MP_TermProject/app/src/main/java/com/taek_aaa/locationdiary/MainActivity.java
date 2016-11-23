@@ -43,7 +43,7 @@ import static java.lang.System.exit;
 
 public class MainActivity extends Activity {
 
-    final DBManager dbManager = new DBManager(this, "GPS.db", null, 1);
+    final DBManager dbManager = new DBManager(this);
     ScrollView scroll;
     int iter = 0;
     MyLocationListener mll = null;
@@ -79,10 +79,6 @@ public class MainActivity extends Activity {
                 startActivity(mapitt);
             }
         });
-
-
-
-
     }
 
     @Override
@@ -162,8 +158,8 @@ public class MainActivity extends Activity {
             latitudeDouble = location.getLatitude();
             longitudeDouble = location.getLongitude();
 
-            //dbManager.insert(latitudeDouble, longitudeDouble);
-
+            dbManager.insert(latitudeDouble, longitudeDouble,checkBoxCheck.result,"",iter,"","","");
+            Log.d("test",dbManager.toString());
             llistLatitude.add(iter, latitudeDouble);
             llistLongitude.add(iter, longitudeDouble);
             llistLocation.add(iter, new LatLng(latitudeDouble,longitudeDouble));
@@ -174,9 +170,11 @@ public class MainActivity extends Activity {
             llistText.add(iter, "");
             llistTime.add(iter, "");
             iter++;
-            Log.i("저장", "성공");
+
+
+            Log.i("test", "성공");
            // dbManager.getResult();
-            Toast.makeText(MainActivity.this, "입력 되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "DB에 입력 되었습니다.", Toast.LENGTH_SHORT).show();
         }
 
         @Override

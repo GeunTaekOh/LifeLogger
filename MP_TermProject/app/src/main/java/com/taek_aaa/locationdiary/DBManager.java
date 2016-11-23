@@ -10,29 +10,29 @@ public class DBManager extends SQLiteOpenHelper {
     public static double curlatitude;
     public static double curlongitude;
 
-    public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, null, 1);
+    public DBManager(Context context) {
+        super(context, "MyLocation", null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 새로운 Table 생성
-        db.execSQL("CREATE TABLE gpstable (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude double , longitude double);");
+        db.execSQL("CREATE TABLE database (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude REAL , longitude REAL, TodoOrEvent TEXT, category TEXT, HowLong INTEGER, num TEXT, text TEXT, time TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists gpstable;");
+        db.execSQL("drop table if exists database;");
     }
 
-    public void insert(double latitude, double longitude) {
+    public void insert(double latitude, double longitude, boolean TodoOrEvent, String category, int HowLong, String num, String text, String time) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO gpstable VALUES(NULL, " + latitude + ", " + longitude + ");");  //string넣을때는 '' 하고그안에""해야
+        db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + TodoOrEvent + "', '" + category + "', " + HowLong + ", '" + num + "', '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
         db.close();
     }
 
     public void getResult() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM gpstable", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
        // c = cursor;
         while (cursor.moveToNext()) {
             double latitudecur = cursor.getDouble(cursor.getColumnIndex("latitude"));

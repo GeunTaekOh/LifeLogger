@@ -45,20 +45,27 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
-        <CheckBox
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To Do"
             android:checked="true"
             android:id="@+id/checkToDo"
             />
-        <CheckBox
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Event"
             android:id="@+id/checkEvent"
 
+
             />
+        </RadioGroup>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
