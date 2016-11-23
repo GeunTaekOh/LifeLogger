@@ -3,9 +3,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import static com.taek_aaa.locationdiary.DataSet.alistCategory;
-import static com.taek_aaa.locationdiary.DataSet.alistLatitude;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
+import static com.taek_aaa.locationdiary.DataSet.llistCategory;
+import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
 
 
 public class List extends Activity {
@@ -16,18 +16,18 @@ public class List extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        int alsize = alistLatitude.size();
+        int alsize = llistLatitude.size();
         int valueOfCategory[] = new int[category_arr.length];
 
         for(int i=0; i<alsize; i++) {
-            if(alistCategory.get(i).toString().equals(category_arr[0])){
+            if(llistCategory.get(i).toString().equals(category_arr[0])){
                 valueOfCategory[0]++;
             }
-            else if (alistCategory.get(i).toString().equals(category_arr[1])){
+            else if (llistCategory.get(i).toString().equals(category_arr[1])){
                 valueOfCategory[1]++;
-            }else if(alistCategory.get(i).toString().equals(category_arr[2])){
+            }else if(llistCategory.get(i).toString().equals(category_arr[2])){
                 valueOfCategory[2]++;
-            }else if(alistCategory.get(i).toString().equals(category_arr[3])){
+            }else if(llistCategory.get(i).toString().equals(category_arr[3])){
                 valueOfCategory[3]++;
             }
         }

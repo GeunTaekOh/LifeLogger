@@ -29,14 +29,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
-import static com.taek_aaa.locationdiary.DataSet.alistCategory;
-import static com.taek_aaa.locationdiary.DataSet.alistLatitude;
-import static com.taek_aaa.locationdiary.DataSet.alistLocation;
-import static com.taek_aaa.locationdiary.DataSet.alistLongitude;
-import static com.taek_aaa.locationdiary.DataSet.alistText;
-import static com.taek_aaa.locationdiary.DataSet.alistTime;
-import static com.taek_aaa.locationdiary.DataSet.alistTodo;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
+import static com.taek_aaa.locationdiary.DataSet.llistCategory;
+import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
+import static com.taek_aaa.locationdiary.DataSet.llistLocation;
+import static com.taek_aaa.locationdiary.DataSet.llistLongitude;
+import static com.taek_aaa.locationdiary.DataSet.llistNum;
+import static com.taek_aaa.locationdiary.DataSet.llistText;
+import static com.taek_aaa.locationdiary.DataSet.llistTime;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -70,20 +70,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        int listsize = alistLongitude.size();
+        int listsize = llistLongitude.size();
         slistsize=listsize;
         for (int i = 0; i < listsize; i++) {
             MarkerOptions opt = new MarkerOptions();
-            opt.position(alistLocation.get(i));
-            opt.title(alistTodo.get(i));
-            opt.snippet(alistText.get(i)+"@"+alistTime.get(i));
+            opt.position(llistLocation.get(i));
+            opt.title(llistNum.get(i));
+            opt.snippet(llistText.get(i)+"@"+llistTime.get(i));
 
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
-                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(alistLatitude.get(i - 1)), Double.valueOf(alistLongitude.get(i - 1))), new LatLng(Double.valueOf(alistLatitude.get(i)), Double.valueOf(alistLongitude.get(i)))).width(5).color(Color.RED));
+                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(llistLatitude.get(i - 1)), Double.valueOf(llistLongitude.get(i - 1))), new LatLng(Double.valueOf(llistLatitude.get(i)), Double.valueOf(llistLongitude.get(i)))).width(5).color(Color.RED));
             }
         }
-        mMap.moveCamera(newLatLng(alistLocation.get(0)));
+        mMap.moveCamera(newLatLng(llistLocation.get(0)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -107,13 +107,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 outermemo = editText.getText().toString();
-                                alistText.set(temp,outermemo);
+                                llistText.set(temp,outermemo);
                                 Log.d("ppp",String.valueOf(temp));
                                 SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
                                 Date clsTime = new Date();
                                 String result = df.format(clsTime);
-                                alistTime.set(temp,result);
-                                alistCategory.set(temp,type_str);
+                                llistTime.set(temp,result);
+                                llistCategory.set(temp,type_str);
                                 temp=0;
                                 type_str = "";
                                 final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
