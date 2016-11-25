@@ -9,8 +9,8 @@ import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
 
 
 public class List extends Activity {
-    int ary[] = new int[4];
-    String arystr[] = new String[4];
+    int ary[] = new int[7];
+    String arystr[] = new String[7];
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -29,6 +29,14 @@ public class List extends Activity {
                 valueOfCategory[2]++;
             }else if(llistCategory.get(i).toString().equals(category_arr[3])){
                 valueOfCategory[3]++;
+            }else if(llistCategory.get(i).toString().equals(category_arr[4])){
+                valueOfCategory[4]++;
+            }else if(llistCategory.get(i).toString().equals(category_arr[5])){
+                valueOfCategory[5]++;
+            }else if(llistCategory.get(i).toString().equals(category_arr[6])) {
+                valueOfCategory[6]++;
+            }else if(llistCategory.get(i).toString().equals(category_arr[7])) {
+                valueOfCategory[7]++;
             }
         }
         for(int i=0; i<category_arr.length; i++){

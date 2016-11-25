@@ -11,17 +11,37 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="400dp"
         android:layout_height="550dp"
-        tools:context="com.taek_aaa.mylocationlogger.MapsActivity" />
+        tools:context="com.taek_aaa.mylocationlogger.MapsActivity"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/showlist"
         android:text="Show List"
         android:onClick="clickshowlist"
-
-
         />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/deletebtn"
+        android:text="delete"
+        android:onClick="onClickDeletebtn"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/insetbtn"
+        android:text="insert"
+        android:onClick="onClickInsertbtn"
+        />
+    </LinearLayout>
 
 
 

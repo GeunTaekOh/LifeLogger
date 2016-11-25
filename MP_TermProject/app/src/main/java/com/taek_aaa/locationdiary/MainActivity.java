@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
     long updatedtime = 0L;
     int secs = 0;
     int mins = 0;
-    int milliseconds = 0;
+    int hours = 0;
     Handler handler = new Handler();
     int t=1;
 
@@ -171,7 +171,6 @@ public class MainActivity extends Activity {
             llistTime.add(iter, "");
             iter++;
 
-
             Log.i("test", "성공");
            // dbManager.getResult();
             Toast.makeText(MainActivity.this, "DB에 입력 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -206,7 +205,6 @@ public class MainActivity extends Activity {
     public void onClickTimerStartbtn(View v){
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
         final TextView timerTv = (TextView) findViewById(R.id.timerTextView);
-
         if(t==1) {
             startbtn.setText("Pause");
             starttime = SystemClock.uptimeMillis();
@@ -227,28 +225,25 @@ public class MainActivity extends Activity {
         TextView stopWatchtv = (TextView)findViewById(R.id.timerTextView);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
             /////////// 나주엥 온아이템클릭을 타이머 스탑 누르면 뜨게 바꾸기
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 llistCategory.add(iter,String.valueOf(position));
+                Log.d("test","카테고리의"+position+"이셀렉되었습니다");  //이부분오류있음 나중에 카테고리누르고 옆에 적용버튼을만들고 거기에 이코드넣기
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
         starttime = 0L;
         timeInMilliseconds = 0L;
         timeSwapBuff = 0L;
         updatedtime = 0L;
         secs = 0;
         mins = 0;
-        milliseconds = 0;
+        hours=0;
         handler.removeCallbacks(updateTimer);
         stopWatchtv.setText("00:00:00");
         Log.d("test","찍힘");
-
     }
 
     public Runnable updateTimer = new Runnable() {
@@ -258,16 +253,12 @@ public class MainActivity extends Activity {
             updatedtime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedtime / 1000);
             mins = secs / 60;
+            hours = mins/60;
             secs = secs % 60;
-            milliseconds = (int) (updatedtime % 1000);
-            timerTv.setText("" + mins + ":" + String.format("%02d", secs) + ":"
-                    + String.format("%03d", milliseconds));
+            timerTv.setText(""+ String.format("%02d",hours)+":"+"" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
             handler.postDelayed(this, 0);
         }
     };
-
-
-
 }
 
 
