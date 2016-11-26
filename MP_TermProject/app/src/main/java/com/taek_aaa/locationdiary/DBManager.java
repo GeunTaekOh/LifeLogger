@@ -16,7 +16,7 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 새로운 Table 생성
-        db.execSQL("CREATE TABLE database (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude REAL , longitude REAL, TodoOrEvent TEXT, category TEXT, HowLong INTEGER, num TEXT, text TEXT, time TEXT);");
+        db.execSQL("CREATE TABLE database (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude REAL , longitude REAL, TodoOrEvent TEXT, category INTEGER, HowLong INTEGER, num TEXT, text TEXT, time TEXT);");
     }
 
     @Override
@@ -24,7 +24,7 @@ public class DBManager extends SQLiteOpenHelper {
         db.execSQL("drop table if exists database;");
     }
 
-    public void insert(double latitude, double longitude, boolean TodoOrEvent, String category, int HowLong, String num, String text, String time) {
+    public void insert(double latitude, double longitude, String TodoOrEvent, int category, int HowLong, String num, String text, String time) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + TodoOrEvent + "', '" + category + "', " + HowLong + ", '" + num + "', '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
         db.close();
