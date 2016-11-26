@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:id="@+id/firstLine"
+        android:id="@+id/LocationLine"
         android:orientation="horizontal"
         android:layout_gravity="top"
         >
@@ -41,7 +41,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/secondLine"
+        android:id="@+id/ButtonAndRadioButtonLine"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -88,7 +88,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:id="@+id/thirdLine"
+        android:id="@+id/categoryLine"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -104,10 +104,34 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:id="@+id/fourthLine"
+        android:id="@+id/textLine"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TexteditText"
+            android:hint="자세한 정보를 입력하세요."
+
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/timerLine"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >
@@ -127,7 +151,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:id="@+id/fifthLine"
+        android:id="@+id/startAndEndLine"
         android:orientation="horizontal"
         android:layout_gravity="center"
         >

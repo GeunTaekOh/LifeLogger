@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
-import static com.taek_aaa.locationdiary.DataSet.llistCategory;
-import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
+
 
 
 public class List extends Activity {
@@ -16,10 +15,10 @@ public class List extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        int alsize = llistLatitude.size();
+       // int alsize = llistLatitude.size();
         int valueOfCategory[] = new int[category_arr.length];
 
-        for(int i=0; i<alsize; i++) {
+      /*  for(int i=0; i<alsize; i++) {
             if(llistCategory.get(i).toString().equals(category_arr[0])){
                 valueOfCategory[0]++;
             }
@@ -38,7 +37,7 @@ public class List extends Activity {
             }else if(llistCategory.get(i).toString().equals(category_arr[7])) {
                 valueOfCategory[7]++;
             }
-        }
+        }*/
         for(int i=0; i<category_arr.length; i++){
             ary[i]=valueOfCategory[i];
             arystr[i]=category_arr[i];

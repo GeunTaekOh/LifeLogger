@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -33,9 +34,9 @@ import java.util.Date;
 import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index;
 import static com.taek_aaa.locationdiary.DataSet.interval_Time;
 import static com.taek_aaa.locationdiary.DataSet.latitudeDouble;
-import static com.taek_aaa.locationdiary.DataSet.llistCategory;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
+import static com.taek_aaa.locationdiary.R.id.spinner;
 import static java.lang.System.exit;
 
 public class InsertActivity extends Activity {
@@ -54,12 +55,12 @@ public class InsertActivity extends Activity {
     int mins = 0;
     int hours = 0;
     Handler handler = new Handler();
-    int t=1;
-    RadioButton checkBoxTodo =null;
+    int t = 1;
+    RadioButton checkBoxTodo = null;
     RadioButton checkBoxEvent = null;
     RadioGroup radioGroup = null;
     Button confirm = null;
-    RadioButton selectedbtn =null;
+    RadioButton selectedbtn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,30 +68,24 @@ public class InsertActivity extends Activity {
         setContentView(R.layout.activity_insert);
         scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.setVerticalScrollBarEnabled(true);
-        TextView stopWatchtv = (TextView)findViewById(R.id.timerTextView);
+        TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
         stopWatchtv.setText("00:00:00");
-
         listenerOnBtn();
 
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                llistCategory.add(iter,String.valueOf(position));
-                Log.i("test","카테고리의"+position+"이셀렉되었습니다");
-                categoty_arr_index=position;
+                //llistCategory.add(iter, String.valueOf(position));
+                Log.i("test", "카테고리의" + position + "이셀렉되었습니다");
+                categoty_arr_index = position;
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
-
-
-
-
     }
-
 
     public void onClickStopbtn(View v) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -124,7 +119,6 @@ public class InsertActivity extends Activity {
 
                             Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             startActivity(intent);
-                            //startActivityForResult(intent,);
                         }
 
                     })
@@ -148,29 +142,12 @@ public class InsertActivity extends Activity {
         public void onLocationChanged(Location location) {
             String str = "Latitude: " + location.getLatitude() + "\n" + "Longitude: " + location.getLongitude() + "\n";
             TextView tv = (TextView) findViewById(R.id.showLocationtv);
-            tv.setText(str);//append를 setText로 바꿈
+            tv.setText(str);
             Toast.makeText(getBaseContext(), str, Toast.LENGTH_SHORT).show();
 
             latitudeDouble = location.getLatitude();
             longitudeDouble = location.getLongitude();
 
-            //dbManager.insert(latitudeDouble, longitudeDouble,true,"",iter,"","","");
-       /*     Log.i("test",dbManager.toString());
-            //Log.i("test",String.valueOf(re));
-            llistLatitude.add(iter, latitudeDouble);
-            llistLongitude.add(iter, longitudeDouble);
-            llistLocation.add(iter, new LatLng(latitudeDouble,longitudeDouble));
-            //llistisToDoorEvent.add(iter, re);
-            llistCategory.add(iter, "");
-            llistHowLong.add(iter, 0);
-            llistNum.add(iter,iter+"");
-            llistText.add(iter, "");
-            llistTime.add(iter, "");*/
-
-
-       //     Log.i("test", "디비저장성공");
-           // dbManager.getResult();
-            Toast.makeText(InsertActivity.this, "DB에 입력 되었습니다.", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -199,45 +176,48 @@ public class InsertActivity extends Activity {
             Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
         }
     }
-    public void onClickTimerStartbtn(View v){
+
+    public void onClickTimerStartbtn(View v) {
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
         final TextView timerTv = (TextView) findViewById(R.id.timerTextView);
-        if(t==1) {
+        if (t == 1) {
             startbtn.setText("Pause");
             starttime = SystemClock.uptimeMillis();
             handler.postDelayed(updateTimer, 0);
-            t=0;
-        }else{
+            t = 0;
+        } else {
             startbtn.setText("Start");
             timerTv.setTextColor(Color.BLUE);
             timeSwapBuff += timeInMilliseconds;
             handler.removeCallbacks(updateTimer);
-            t=1;
+            t = 1;
         }
     }
 
-
-    public void onClickTimerEndbtn(View v){
+    public void onClickTimerEndbtn(View v) {
         String howlongtime;
         String shour;
         String sminute;
         String sseconds;
         int ihowlongtime;
-
-        TextView stopWatchtv = (TextView)findViewById(R.id.timerTextView);
+        String strText;
+        EditText textedit = (EditText) findViewById(R.id.TexteditText);
+        TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
         howlongtime = stopWatchtv.getText().toString();
-        shour = howlongtime.substring(0,2);
-        sminute = howlongtime.substring(3,5);
+        shour = howlongtime.substring(0, 2);
+        sminute = howlongtime.substring(3, 5);
         sseconds = howlongtime.substring(6);
-        ihowlongtime = Integer.valueOf(shour)*60*60 + Integer.valueOf(sminute)*60 + Integer.valueOf(sseconds);
+        ihowlongtime = Integer.valueOf(shour) * 60 * 60 + Integer.valueOf(sminute) * 60 + Integer.valueOf(sseconds);
 
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
         Date clsTime = new Date();
         String resulttime = df.format(clsTime);
 
+        strText = textedit.getText().toString();
+        Spinner tmpspinner = (Spinner)findViewById(spinner);
 
-        //llistHowLong.add(iter,howlongtime);
-        Log.i("test",String.valueOf(howlongtime));
+
+        Log.i("test", String.valueOf(howlongtime));
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
         starttime = 0L;
         timeInMilliseconds = 0L;
@@ -245,28 +225,32 @@ public class InsertActivity extends Activity {
         updatedtime = 0L;
         secs = 0;
         mins = 0;
-        hours=0;
+        hours = 0;
         handler.removeCallbacks(updateTimer);
         stopWatchtv.setText("00:00:00");
         startbtn.setText("Start");
-        t=1;
-        Log.i("test","찍힘");
-        ////////////////////////////////////////////////////////////////////////
+        t = 1;
+        Log.i("test", "찍힘");
         try {
-            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index,ihowlongtime,String.valueOf(iter),null,resulttime );
-            Log.i("value","db에값을입력하였습니다");
-            Log.i("value",""+latitudeDouble);
-            Log.i("value",""+longitudeDouble);
-            Log.i("value",""+stoDoOrEvent);
-            Log.i("value",""+categoty_arr_index);
-            Log.i("value",""+ihowlongtime);
-            Log.i("value",""+String.valueOf(iter));
-            Log.i("value","null"); //텍스트부분.하.
-            Log.i("value",""+resulttime);  // time부분.하.
+            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, String.valueOf(iter), strText, resulttime);
+            Log.i("value", "db에값을입력하였습니다");
+            Log.i("value", "" + latitudeDouble);
+            Log.i("value", "" + longitudeDouble);
+            Log.i("value", "" + stoDoOrEvent);
+            Log.i("value", "" + categoty_arr_index);
+            Log.i("value", "" + ihowlongtime);
+            Log.i("value", "" + String.valueOf(iter));
+            Log.i("value", ""+strText); //텍스트부분.하.
+            Log.i("value", "" + resulttime);  // time부분.하.
 
-        }catch (Exception e){
-            Toast.makeText(this,"값을 전부 입력하지 않았습니다",Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "데이터 입력에 오류가 있습니다", Toast.LENGTH_SHORT).show();
         }
+        textedit.setText("");
+        tmpspinner.setSelection(0);
+        Toast.makeText(this, "DB에 정상입력 되었습니다", Toast.LENGTH_SHORT).show();
+
+
         iter++;
     }
 
@@ -277,32 +261,30 @@ public class InsertActivity extends Activity {
             updatedtime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedtime / 1000);
             mins = secs / 60;
-            hours = mins/60;
+            hours = mins / 60;
             secs = secs % 60;
-            timerTv.setText(""+ String.format("%02d",hours)+":"+"" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
+            timerTv.setText("" + String.format("%02d", hours) + ":" + "" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
             handler.postDelayed(this, 0);
         }
     };
 
-    public void listenerOnBtn(){
-        radioGroup = (RadioGroup)findViewById(R.id.radiobtnGroup);
+    public void listenerOnBtn() {
+        radioGroup = (RadioGroup) findViewById(R.id.radiobtnGroup);
         checkBoxTodo = (RadioButton) findViewById(R.id.checkToDo);
-        checkBoxEvent = (RadioButton)findViewById(R.id.checkEvent);
-        confirm = (Button)findViewById(R.id.confirmbtn);
+        checkBoxEvent = (RadioButton) findViewById(R.id.checkEvent);
+        confirm = (Button) findViewById(R.id.confirmbtn);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int selected = radioGroup.getCheckedRadioButtonId();
-                Log.i("test",String.valueOf(selected));
-                selectedbtn = (RadioButton)findViewById(selected);
-                Log.i("test",selectedbtn.getText().toString());
-                stoDoOrEvent=selectedbtn.getText().toString();
+                Log.i("test", String.valueOf(selected));
+                selectedbtn = (RadioButton) findViewById(selected);
+                Log.i("test", selectedbtn.getText().toString());
+                stoDoOrEvent = selectedbtn.getText().toString();
             }
         });
     }
-
-
 }
 
 

@@ -25,9 +25,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
+/*
+import static com.taek_aaa.locationdiary.DataSet.iter;
 import static com.taek_aaa.locationdiary.DataSet.llistCategory;
 import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
 import static com.taek_aaa.locationdiary.DataSet.llistLocation;
@@ -36,9 +39,10 @@ import static com.taek_aaa.locationdiary.DataSet.llistNum;
 import static com.taek_aaa.locationdiary.DataSet.llistText;
 import static com.taek_aaa.locationdiary.DataSet.llistTime;
 
+*/
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    final DBManager dbManager = new DBManager(this);
     private GoogleMap mMap;
     Spinner spinner;
     String type_str = "";
@@ -47,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static String outermemo ;
     int slistsize;
     static int temp;
+    LinkedList<DBData> dbdatas = new LinkedList<DBData>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +64,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        dbManager.getResult(dbdatas);
         mMap = googleMap;
-        int listsize = llistLongitude.size();
+        int listsize = dbdatas.size();
         slistsize=listsize;
         for (int i = 0; i < listsize; i++) {
             MarkerOptions opt = new MarkerOptions();
-            opt.position(llistLocation.get(i));
-            opt.title(llistNum.get(i));
-            opt.snippet(llistText.get(i)+"@"+llistTime.get(i));
-
+            //opt.position(llistLocation.get(i));
+            opt.position(new LatLng(dbdatas.get(i).curlatitude,dbdatas.get(i).curlongitude));
+            //opt.title(llistNum.get(i));
+            opt.title(dbdatas.get(i).curNum);
+            //opt.snippet(llistText.get(i)+"@"+llistTime.get(i));
+            opt.snippet(dbdatas.get(i).curText+"@"+dbdatas.get(i).curTime);
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
-                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(llistLatitude.get(i - 1)), Double.valueOf(llistLongitude.get(i - 1))), new LatLng(Double.valueOf(llistLatitude.get(i)), Double.valueOf(llistLongitude.get(i)))).width(5).color(Color.RED));
+                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(dbdatas.get(i - 1).curlatitude), Double.valueOf(dbdatas.get(i - 1).curlongitude)), new LatLng(Double.valueOf(dbdatas.get(i).curlatitude), Double.valueOf(dbdatas.get(i).curlongitude))).width(5).color(Color.RED));
             }
         }
-        mMap.moveCamera(newLatLng(llistLocation.get(0)));
+        mMap.moveCamera(newLatLng(new LatLng(dbdatas.get(0).curlatitude,dbdatas.get(0).curlongitude)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -97,13 +105,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 outermemo = editText.getText().toString();
-                                llistText.set(temp,outermemo);
+                                //llistText.set(temp,outermemo);
                                 Log.d("ppp",String.valueOf(temp));
                                 SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
                                 Date clsTime = new Date();
                                 String result = df.format(clsTime);
-                                llistTime.set(temp,result);
-                                llistCategory.set(temp,type_str);
+                               // llistTime.set(temp,result);
+                               // llistCategory.set(temp,type_str);
                                 temp=0;
                                 type_str = "";
                                 final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
