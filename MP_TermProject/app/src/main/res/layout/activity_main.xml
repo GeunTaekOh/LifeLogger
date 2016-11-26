@@ -1,184 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.taek_aaa.locationdiary.MainActivity"
-    android:orientation="vertical">
+    android:layout_gravity="center"
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/firstLine"
-        android:orientation="horizontal"
-        android:layout_gravity="top"
-        >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CurrentLocation"
-            android:onClick="onClickCurrentLocation"
-            android:id="@+id/currentLocationbtn"
-            />
-<ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="100dp"
-    android:id="@+id/scrollView">
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/showLocationtv"
-            android:text=""
-            />
-</ScrollView>
-    </LinearLayout>
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/images"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/secondLine"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/radiobtnGroup"
-            >
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To Do"
-            android:checked="true"
-            android:id="@+id/checkToDo"
+        android:layout_gravity="center">
 
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Event"
-            android:id="@+id/checkEvent"
-
-
-            />
-        </RadioGroup>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
-            android:id="@+id/confirmbtn"
+            android:id="@+id/inputbtn"
+            android:onClick="onClick"
+            android:text="정보 입력하기"
+            android:background="@drawable/button"
 
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="stop"
-            android:id="@+id/stopbtn"
-            android:onClick="onClickStopbtn"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/thirdLine"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:entries="@array/categorySpinner"
-            >
-        </Spinner>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/fourthLine"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timerTextView"
-            android:text=""
-            android:textColor="#0100FF"
-            android:textSize="30sp"
-
-            />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/fifthLine"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timerStartbtn"
-            android:text="start"
-            android:onClick="onClickTimerStartbtn"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/timerEndbtn"
-            android:text="end"
-            android:onClick="onClickTimerEndbtn"
+            android:id="@+id/mapbtn"
+            android:onClick="onClick"
+            android:text="맵으로 보기"
+            android:background="@drawable/button"
             />
 
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/sixthLine"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         >
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="map view"
-            android:id="@+id/mapViewbtn"
-            android:onClick="onClickMapViewbtn"
+            android:id="@+id/staticbtn"
+            android:onClick="onClick"
+            android:text="통계 확인하기"
+            android:background="@drawable/button"
             />
 
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/lastLine"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목표를 만들 것임"
-            android:id="@+id/goalTv"
-            android:onClick="onClickGoaltv"
+            android:id="@+id/goalbtn"
+            android:onClick="onClick"
+            android:text="목표 설정하기"
+            android:background="@drawable/button"
+
             />
+
+
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exitbtn"
+        android:onClick="onClick"
+        android:background="@drawable/exit"
+        android:layout_marginLeft="200sp"
+        android:layout_marginTop="70sp"
+
+        />
+
+
+
+
 </LinearLayout>
