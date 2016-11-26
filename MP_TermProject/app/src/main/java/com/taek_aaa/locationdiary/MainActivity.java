@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +39,6 @@ import static com.taek_aaa.locationdiary.DataSet.llistLongitude;
 import static com.taek_aaa.locationdiary.DataSet.llistNum;
 import static com.taek_aaa.locationdiary.DataSet.llistText;
 import static com.taek_aaa.locationdiary.DataSet.llistTime;
-import static com.taek_aaa.locationdiary.DataSet.llistisToDoorEvent;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
 import static java.lang.System.exit;
 
@@ -59,7 +60,11 @@ public class MainActivity extends Activity {
     int hours = 0;
     Handler handler = new Handler();
     int t=1;
-
+    RadioButton checkBoxTodo =null;
+    RadioButton checkBoxEvent = null;
+    RadioGroup radioGroup = null;
+    Button confirm = null;
+    RadioButton selectedbtn =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class MainActivity extends Activity {
         TextView stopWatchtv = (TextView)findViewById(R.id.timerTextView);
         stopWatchtv.setText("00:00:00");
 
+        listenerOnBtn();
         final Intent mapitt = new Intent(this, MapsActivity.class);
         Button mapbtn = (Button) findViewById(R.id.mapViewbtn);
 
@@ -79,6 +85,23 @@ public class MainActivity extends Activity {
                 startActivity(mapitt);
             }
         });
+
+        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                llistCategory.add(iter,String.valueOf(position));
+                Log.i("test","카테고리의"+position+"이셀렉되었습니다");
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+
+
+
     }
 
     @Override
@@ -153,17 +176,17 @@ public class MainActivity extends Activity {
             TextView tv = (TextView) findViewById(R.id.showLocationtv);
             tv.setText(str);//append를 setText로 바꿈
             Toast.makeText(getBaseContext(), str, Toast.LENGTH_SHORT).show();
-            CheckBoxCheck checkBoxCheck = new CheckBoxCheck();
 
             latitudeDouble = location.getLatitude();
             longitudeDouble = location.getLongitude();
 
-            dbManager.insert(latitudeDouble, longitudeDouble,checkBoxCheck.result,"",iter,"","","");
-            Log.d("test",dbManager.toString());
+            dbManager.insert(latitudeDouble, longitudeDouble,true,"",iter,"","","");
+            Log.i("test",dbManager.toString());
+            //Log.i("test",String.valueOf(re));
             llistLatitude.add(iter, latitudeDouble);
             llistLongitude.add(iter, longitudeDouble);
             llistLocation.add(iter, new LatLng(latitudeDouble,longitudeDouble));
-            llistisToDoorEvent.add(iter, checkBoxCheck.result);
+            //llistisToDoorEvent.add(iter, re);
             llistCategory.add(iter, "");
             llistHowLong.add(iter, 0);
             llistNum.add(iter,iter+"");
@@ -171,7 +194,7 @@ public class MainActivity extends Activity {
             llistTime.add(iter, "");
             iter++;
 
-            Log.i("test", "성공");
+            Log.i("test", "디비저장성공");
            // dbManager.getResult();
             Toast.makeText(MainActivity.this, "DB에 입력 되었습니다.", Toast.LENGTH_SHORT).show();
         }
@@ -221,19 +244,12 @@ public class MainActivity extends Activity {
 
 
     public void onClickTimerEndbtn(View v){
-        Spinner spinner = (Spinner)findViewById(R.id.spinner);
+        String howlongtime;
         TextView stopWatchtv = (TextView)findViewById(R.id.timerTextView);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            /////////// 나주엥 온아이템클릭을 타이머 스탑 누르면 뜨게 바꾸기
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                llistCategory.add(iter,String.valueOf(position));
-                Log.d("test","카테고리의"+position+"이셀렉되었습니다");  //이부분오류있음 나중에 카테고리누르고 옆에 적용버튼을만들고 거기에 이코드넣기
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        howlongtime = stopWatchtv.getText().toString();
+        //llistHowLong.add(iter,howlongtime);
+        Log.i("test",String.valueOf(howlongtime));
+        Button startbtn = (Button) findViewById(R.id.timerStartbtn);
         starttime = 0L;
         timeInMilliseconds = 0L;
         timeSwapBuff = 0L;
@@ -243,7 +259,9 @@ public class MainActivity extends Activity {
         hours=0;
         handler.removeCallbacks(updateTimer);
         stopWatchtv.setText("00:00:00");
-        Log.d("test","찍힘");
+        startbtn.setText("Start");
+        t=1;
+        Log.i("test","찍힘");
     }
 
     public Runnable updateTimer = new Runnable() {
@@ -259,6 +277,25 @@ public class MainActivity extends Activity {
             handler.postDelayed(this, 0);
         }
     };
+
+    public void listenerOnBtn(){
+        radioGroup = (RadioGroup)findViewById(R.id.radiobtnGroup);
+        checkBoxTodo = (RadioButton) findViewById(R.id.checkToDo);
+        checkBoxEvent = (RadioButton)findViewById(R.id.checkEvent);
+        confirm = (Button)findViewById(R.id.confirmbtn);
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selected = radioGroup.getCheckedRadioButtonId();
+                Log.i("test",String.valueOf(selected));
+                selectedbtn = (RadioButton)findViewById(selected);
+                Log.i("test",selectedbtn.getText().toString());
+            }
+        });
+    }
+
+
 }
 
 

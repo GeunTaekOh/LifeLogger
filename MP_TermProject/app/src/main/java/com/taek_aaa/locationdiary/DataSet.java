@@ -22,7 +22,7 @@ public class DataSet {
     public static LinkedList<String> llistNum = new LinkedList<String>();
     public static LinkedList<String> llistText = new LinkedList<String>();
     public static LinkedList<String> llistTime = new LinkedList<String>();
-
+    public static Boolean result;
     public static String[] category_arr = {"공부", "식사", "카페", "이동", "수업", "친구", "휴식"};
     static int iter = 0;
 

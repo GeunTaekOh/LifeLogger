@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/radiobtnGroup"
             >
         <RadioButton
             android:layout_width="wrap_content"
@@ -56,6 +57,7 @@
             android:text="To Do"
             android:checked="true"
             android:id="@+id/checkToDo"
+
             />
         <RadioButton
             android:layout_width="wrap_content"
@@ -66,6 +68,13 @@
 
             />
         </RadioGroup>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:id="@+id/confirmbtn"
+
+            />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,6 +100,8 @@
             android:entries="@array/categorySpinner"
             >
         </Spinner>
+
+
     </LinearLayout>
 
     <LinearLayout
