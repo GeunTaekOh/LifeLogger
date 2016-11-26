@@ -39,6 +39,7 @@ public class MainActivity extends Activity{
                 startActivity(new Intent(this,MapsActivity.class));
                 break;
             case R.id.staticbtn:
+                startActivity(new Intent(this, List.class));
                 break;
             case R.id.goalbtn:
                 break;
