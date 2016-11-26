@@ -81,18 +81,11 @@ public class InsertActivity extends Activity {
                 Log.i("test", "카테고리의" + position + "이셀렉되었습니다");
                 categoty_arr_index = position;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-    }
-
-    public void onClickStopbtn(View v) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(InsertActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        }
-        locationManager.removeUpdates(mll);
-        Toast.makeText(InsertActivity.this, "더이상 GPS 정보롤 받아오지 않습니다", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickCurrentLocation(View v) {
@@ -147,6 +140,12 @@ public class InsertActivity extends Activity {
 
             latitudeDouble = location.getLatitude();
             longitudeDouble = location.getLongitude();
+
+            if (ActivityCompat.checkSelfPermission(InsertActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(InsertActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(InsertActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }
+            locationManager.removeUpdates(mll);
+
 
         }
 
@@ -203,6 +202,7 @@ public class InsertActivity extends Activity {
         String strText;
         EditText textedit = (EditText) findViewById(R.id.TexteditText);
         TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
+        TextView tmptv = (TextView) findViewById(R.id.showLocationtv);
         howlongtime = stopWatchtv.getText().toString();
         shour = howlongtime.substring(0, 2);
         sminute = howlongtime.substring(3, 5);
@@ -214,7 +214,7 @@ public class InsertActivity extends Activity {
         String resulttime = df.format(clsTime);
 
         strText = textedit.getText().toString();
-        Spinner tmpspinner = (Spinner)findViewById(spinner);
+        Spinner tmpspinner = (Spinner) findViewById(spinner);
 
 
         Log.i("test", String.valueOf(howlongtime));
@@ -240,7 +240,7 @@ public class InsertActivity extends Activity {
             Log.i("value", "" + categoty_arr_index);
             Log.i("value", "" + ihowlongtime);
             Log.i("value", "" + String.valueOf(iter));
-            Log.i("value", ""+strText); //텍스트부분.하.
+            Log.i("value", "" + strText); //텍스트부분.하.
             Log.i("value", "" + resulttime);  // time부분.하.
 
         } catch (Exception e) {
@@ -248,6 +248,7 @@ public class InsertActivity extends Activity {
         }
         textedit.setText("");
         tmpspinner.setSelection(0);
+        tmptv.setText("");
         Toast.makeText(this, "DB에 정상입력 되었습니다", Toast.LENGTH_SHORT).show();
 
 

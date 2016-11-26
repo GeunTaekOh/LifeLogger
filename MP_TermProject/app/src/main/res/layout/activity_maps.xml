@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -11,30 +12,27 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="400dp"
         android:layout_height="550dp"
-        tools:context="com.taek_aaa.mylocationlogger.MapsActivity"
-        />
+        tools:context="com.taek_aaa.mylocationlogger.MapsActivity" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/deletebtn"
-        android:text="delete"
-        android:onClick="onClickDeletebtn"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/insetbtn"
-        android:text="insert"
-        android:onClick="onClickInsertbtn"
-        />
+        <Button
+            android:id="@+id/deletebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickDeletebtn"
+            android:text="delete" />
+
+        <Button
+            android:id="@+id/insetbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickInsertbtn"
+            android:text="insert" />
     </LinearLayout>
-
 
 
 </LinearLayout>

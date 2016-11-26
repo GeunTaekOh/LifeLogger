@@ -48,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String type_str = "";
     EditText editText;
     LinearLayout type_ll;
-    static String outermemo ;
+    static String outermemo;
     int slistsize;
     static int temp;
     LinkedList<DBData> dbdatas = new LinkedList<DBData>();
@@ -62,26 +62,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         dbManager.getResult(dbdatas);
         mMap = googleMap;
         int listsize = dbdatas.size();
-        slistsize=listsize;
+        slistsize = listsize;
         for (int i = 0; i < listsize; i++) {
             MarkerOptions opt = new MarkerOptions();
             //opt.position(llistLocation.get(i));
-            opt.position(new LatLng(dbdatas.get(i).curlatitude,dbdatas.get(i).curlongitude));
+            opt.position(new LatLng(dbdatas.get(i).curlatitude, dbdatas.get(i).curlongitude));
             //opt.title(llistNum.get(i));
             opt.title(dbdatas.get(i).curNum);
             //opt.snippet(llistText.get(i)+"@"+llistTime.get(i));
-            opt.snippet(dbdatas.get(i).curText+"@"+dbdatas.get(i).curTime);
+            opt.snippet(dbdatas.get(i).curText + "@" + dbdatas.get(i).curTime);
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
                 mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(dbdatas.get(i - 1).curlatitude), Double.valueOf(dbdatas.get(i - 1).curlongitude)), new LatLng(Double.valueOf(dbdatas.get(i).curlatitude), Double.valueOf(dbdatas.get(i).curlongitude))).width(5).color(Color.RED));
             }
         }
-        mMap.moveCamera(newLatLng(new LatLng(dbdatas.get(0).curlatitude,dbdatas.get(0).curlongitude)));
+        mMap.moveCamera(newLatLng(new LatLng(dbdatas.get(0).curlatitude, dbdatas.get(0).curlongitude)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -95,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 type_ll.addView(editText);
                 type_ll.setPadding(50, 0, 0, 0);
                 int a = Integer.valueOf(marker.getTitle());
-                temp=a;
+                temp = a;
                 adb
                         .setTitle("메모")
                         .setCancelable(false)
@@ -106,13 +107,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onClick(DialogInterface dialog, int which) {
                                 outermemo = editText.getText().toString();
                                 //llistText.set(temp,outermemo);
-                                Log.d("ppp",String.valueOf(temp));
+                                Log.d("ppp", String.valueOf(temp));
                                 SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
                                 Date clsTime = new Date();
                                 String result = df.format(clsTime);
-                               // llistTime.set(temp,result);
-                               // llistCategory.set(temp,type_str);
-                                temp=0;
+                                // llistTime.set(temp,result);
+                                // llistCategory.set(temp,type_str);
+                                temp = 0;
                                 type_str = "";
                                 final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
                                 mapFragment.getMapAsync(MapsActivity.this);
@@ -148,7 +149,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-    public void setEditText(){
+
+    public void setEditText() {
         editText = new EditText(this);
         editText.setHint("메모를 입력하세요.");
         editText.setHintTextColor(0x50000000);

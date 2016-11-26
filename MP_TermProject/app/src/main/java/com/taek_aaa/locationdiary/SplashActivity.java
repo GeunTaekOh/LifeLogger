@@ -10,15 +10,15 @@ import android.os.Bundle;
 
 public class SplashActivity extends Activity {
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try{
+        try {
             Thread.sleep(2000);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

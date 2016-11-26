@@ -13,30 +13,30 @@ import android.widget.Toast;
  * Created by taek_aaa on 2016. 11. 26..
  */
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
     private long lastTimeBackPressed;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button inputBtn = (Button)findViewById(R.id.inputbtn);
-        Button mapBtn = (Button)findViewById(R.id.mapbtn);
-        Button staticBtn = (Button)findViewById(R.id.staticbtn);
-        Button goalBtn = (Button)findViewById(R.id.goalbtn);
+        Button inputBtn = (Button) findViewById(R.id.inputbtn);
+        Button mapBtn = (Button) findViewById(R.id.mapbtn);
+        Button staticBtn = (Button) findViewById(R.id.staticbtn);
+        Button goalBtn = (Button) findViewById(R.id.goalbtn);
 
         setContentView(R.layout.activity_main);
 
     }
 
-    public void onClick(View v){
-        switch (v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.inputbtn:
-                startActivity(new Intent(this,InsertActivity.class));
+                startActivity(new Intent(this, InsertActivity.class));
                 break;
             case R.id.mapbtn:
-                startActivity(new Intent(this,MapsActivity.class));
+                startActivity(new Intent(this, MapsActivity.class));
                 break;
             case R.id.staticbtn:
                 startActivity(new Intent(this, List.class));

@@ -12,6 +12,7 @@ public class DBManager extends SQLiteOpenHelper {
     public DBManager(Context context) {
         super(context, "MyLocation", null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 새로운 Table 생성
@@ -32,7 +33,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void getResult(LinkedList<DBData> DBData) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-       // c = cursor;
+        // c = cursor;
         while (cursor.moveToNext()) {
             double latitudecur = cursor.getDouble(cursor.getColumnIndex("latitude"));
             double longitudecur = cursor.getDouble(cursor.getColumnIndex("longitude"));
