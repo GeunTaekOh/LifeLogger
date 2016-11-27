@@ -25,21 +25,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
-/*
-import static com.taek_aaa.locationdiary.DataSet.iter;
-import static com.taek_aaa.locationdiary.DataSet.llistCategory;
-import static com.taek_aaa.locationdiary.DataSet.llistLatitude;
-import static com.taek_aaa.locationdiary.DataSet.llistLocation;
-import static com.taek_aaa.locationdiary.DataSet.llistLongitude;
-import static com.taek_aaa.locationdiary.DataSet.llistNum;
-import static com.taek_aaa.locationdiary.DataSet.llistText;
-import static com.taek_aaa.locationdiary.DataSet.llistTime;
-
-*/
+import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     final DBManager dbManager = new DBManager(this);
@@ -49,9 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     EditText editText;
     LinearLayout type_ll;
     static String outermemo;
-    int slistsize;
     static int temp;
-    LinkedList<DBData> dbdatas = new LinkedList<DBData>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,24 +52,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        dbManager.getResult(dbdatas);
+        sllDBData.clear();
+
+        dbManager.getResult(sllDBData);
         mMap = googleMap;
-        int listsize = dbdatas.size();
-        slistsize = listsize;
-        for (int i = 0; i < listsize; i++) {
+        int count = Integer.parseInt(sllDBData.getLast().curNum );
+
+        for(int i=0; i<= count;i++){
+            Log.i("g", String.valueOf(sllDBData.size()));
+            Log.i("g",String.valueOf(sllDBData.get(i).curlatitude));
+            Log.i("g",String.valueOf(sllDBData.get(i).curlongitude));
+            Log.i("g",sllDBData.get(i).curTodoOrEvent);
+            Log.i("g",String.valueOf(sllDBData.get(i).curCategory));
+            Log.i("g",String.valueOf(sllDBData.get(i).curHowLong));
+            Log.i("g",sllDBData.get(i).curNum);
+            Log.i("g",sllDBData.get(i).curText);
+            Log.i("g",sllDBData.get(i).curTime);
+
+
+        }
+
+
+
+        for (int i = 0; i <= count; i++) {
             MarkerOptions opt = new MarkerOptions();
-            //opt.position(llistLocation.get(i));
-            opt.position(new LatLng(dbdatas.get(i).curlatitude, dbdatas.get(i).curlongitude));
-            //opt.title(llistNum.get(i));
-            opt.title(dbdatas.get(i).curNum);
-            //opt.snippet(llistText.get(i)+"@"+llistTime.get(i));
-            opt.snippet(dbdatas.get(i).curText + "@" + dbdatas.get(i).curTime);
+            opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
+            Log.d("db",String.valueOf(sllDBData.get(i).curlatitude));
+            Log.d("db",String.valueOf(sllDBData.get(i).curlongitude));
+            opt.title(sllDBData.get(i).curNum);
+            Log.d("db",sllDBData.get(i).curNum);
+            opt.snippet(sllDBData.get(i).curText + "@" + sllDBData.get(i).curTime);
+            //mMap.addMarker(opt).showInfoWindow();
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
-                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(dbdatas.get(i - 1).curlatitude), Double.valueOf(dbdatas.get(i - 1).curlongitude)), new LatLng(Double.valueOf(dbdatas.get(i).curlatitude), Double.valueOf(dbdatas.get(i).curlongitude))).width(5).color(Color.RED));
+                mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(sllDBData.get(i - 1).curlatitude), Double.valueOf(sllDBData.get(i - 1).curlongitude)), new LatLng(Double.valueOf(sllDBData.get(i).curlatitude), Double.valueOf(sllDBData.get(i).curlongitude))).width(5).color(Color.RED));
             }
+            Log.d("db","한바퀴돔");
         }
-        mMap.moveCamera(newLatLng(new LatLng(dbdatas.get(0).curlatitude, dbdatas.get(0).curlongitude)));
+        mMap.moveCamera(newLatLng(new LatLng(sllDBData.get(0).curlatitude, sllDBData.get(0).curlongitude)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

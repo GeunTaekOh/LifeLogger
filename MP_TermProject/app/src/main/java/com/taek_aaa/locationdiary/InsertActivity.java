@@ -41,7 +41,6 @@ import static java.lang.System.exit;
 
 public class InsertActivity extends Activity {
 
-    final DBManager dbManager = new DBManager(this);
     ScrollView scroll;
     int iter = 0;
     MyLocationListener mll = null;
@@ -61,7 +60,7 @@ public class InsertActivity extends Activity {
     RadioGroup radioGroup = null;
     Button confirm = null;
     RadioButton selectedbtn = null;
-
+    final DBManager dbManager = new DBManager(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,7 +249,6 @@ public class InsertActivity extends Activity {
         tmpspinner.setSelection(0);
         tmptv.setText("");
         Toast.makeText(this, "DB에 정상입력 되었습니다", Toast.LENGTH_SHORT).show();
-
 
         iter++;
     }
