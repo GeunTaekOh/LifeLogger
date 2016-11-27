@@ -1,6 +1,7 @@
 package com.taek_aaa.locationdiary;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,8 +24,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
@@ -78,12 +77,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int i = 0; i < iter; i++) {
             MarkerOptions opt = new MarkerOptions();
             opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
-            Log.e("value",String.valueOf(sllDBData.get(i).curlatitude));
-            Log.e("value",String.valueOf(sllDBData.get(i).curlongitude));
             opt.title(sllDBData.get(i).curNum);
-            Log.e("value",sllDBData.get(i).curNum);
             opt.snippet(sllDBData.get(i).curText + "@" + sllDBData.get(i).curTime);
-            //mMap.addMarker(opt).showInfoWindow();
+
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
                 mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(sllDBData.get(i - 1).curlatitude), Double.valueOf(sllDBData.get(i - 1).curlongitude)), new LatLng(Double.valueOf(sllDBData.get(i).curlatitude), Double.valueOf(sllDBData.get(i).curlongitude))).width(5).color(Color.RED));
@@ -98,39 +94,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
                 type_ll = new LinearLayout(MapsActivity.this);
-                setSpinner();
-                setEditText();
-                type_ll.addView(spinner);
-                type_ll.addView(editText);
-                type_ll.setPadding(50, 0, 0, 0);
+                //setSpinner();
+                //setEditText();
+                //type_ll.addView(spinner);
+                //type_ll.addView(editText);
+                //type_ll.setPadding(50, 0, 0, 0);
+                type_ll.setPadding(0, 0, 0, 0);
                 int a = Integer.valueOf(marker.getTitle());
                 temp = a;
                 adb
-                        .setTitle("메모")
+                        .setTitle("정보창")
                         .setCancelable(false)
-                        .setMessage("메모를 입력해 주세요.")
+                        .setMessage("종류 : "+sllDBData.get(a).curTodoOrEvent+"\n"+"카테고리 : "+category_arr[sllDBData.get(a).curCategory]+"\n"+"소요시간 : "+sllDBData.get(a).curHowLong+"초"+"\n"+""+"내용 : "+sllDBData.get(a).curText+"\n"+"시간 : "+sllDBData.get(a).curTime)
                         .setView(type_ll)
-                        .setPositiveButton("저장", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                outermemo = editText.getText().toString();
-                                //llistText.set(temp,outermemo);
-                                Log.d("ppp", String.valueOf(temp));
-                                SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
-                                Date clsTime = new Date();
-                                String result = df.format(clsTime);
-                                // llistTime.set(temp,result);
-                                // llistCategory.set(temp,type_str);
-                                temp = 0;
-                                type_str = "";
-                                final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                                mapFragment.getMapAsync(MapsActivity.this);
-                            }
-                        })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
+                            }
+                        })
+                        .setNeutralButton("사진 추가",new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                                intent.setType("image*//*");
+                                startActivity(intent);
+
+                            }
+                        })
+                        .setNegativeButton("사진 촬영", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent();
+                                intent.setAction("android.media.action.IMAGE_CAPTURE");
+                                startActivity(intent);
                             }
                         });
                 AlertDialog ad = adb.create();
