@@ -33,6 +33,7 @@ import java.util.Date;
 
 import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index;
 import static com.taek_aaa.locationdiary.DataSet.interval_Time;
+import static com.taek_aaa.locationdiary.DataSet.iter;
 import static com.taek_aaa.locationdiary.DataSet.latitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
@@ -42,7 +43,7 @@ import static java.lang.System.exit;
 public class InsertActivity extends Activity {
 
     ScrollView scroll;
-    int iter = 0;
+    //int iter = 0;
     MyLocationListener mll = null;
     SQLiteDatabase db;
     private LocationManager locationManager;
@@ -60,8 +61,9 @@ public class InsertActivity extends Activity {
     RadioGroup radioGroup = null;
     Button confirm = null;
     RadioButton selectedbtn = null;
-    final DBManager dbManager = new DBManager(this);
+    DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
@@ -283,6 +285,14 @@ public class InsertActivity extends Activity {
                 stoDoOrEvent = selectedbtn.getText().toString();
             }
         });
+    }
+
+    public void onClickClearDB(View v){     //디비삭제
+        db = dbManager.getWritableDatabase() ;
+        dbManager.onUpgrade(db,1,2);
+        dbManager.close();
+        iter=0;
+        Toast.makeText(this,"DB를 삭제하였습니다",Toast.LENGTH_SHORT).show();
     }
 }
 

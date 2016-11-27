@@ -10,8 +10,8 @@ import java.util.LinkedList;
 
 public class DBManager extends SQLiteOpenHelper {
 
-    public DBManager(Context context) {
-        super(context, "MyLocation", null, 1);
+    public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
     }
 
     @Override

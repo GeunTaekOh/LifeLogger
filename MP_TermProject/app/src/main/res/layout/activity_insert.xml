@@ -148,4 +148,12 @@
             android:onClick="onClickTimerEndbtn"
             android:text="end" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clearDBbtn"
+        android:onClick="onClickClearDB"
+        android:text="DB 삭제"
+        />
 </LinearLayout>

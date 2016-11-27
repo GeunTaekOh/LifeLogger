@@ -5,12 +5,12 @@ package com.taek_aaa.locationdiary;
  */
 
 public class DBData {
-    public static double curlatitude;
-    public static double curlongitude;
-    public static String curTodoOrEvent;
-    public static int curCategory;
-    public static int curHowLong;
-    public static String curNum;
-    public static String curText;
-    public static String curTime;
+    double curlatitude;
+    double curlongitude;
+    String curTodoOrEvent;
+    int curCategory;
+    int curHowLong;
+    String curNum;
+    String curText;
+    String curTime;
 }

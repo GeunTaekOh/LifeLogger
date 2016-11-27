@@ -25,13 +25,15 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
-import static com.taek_aaa.locationdiary.DataSet.sllDBData;
+import static com.taek_aaa.locationdiary.DataSet.iter;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    final DBManager dbManager = new DBManager(this);
+    DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     private GoogleMap mMap;
     Spinner spinner;
     String type_str = "";
@@ -39,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LinearLayout type_ll;
     static String outermemo;
     static int temp;
-
+    LinkedList<DBData> sllDBData = new LinkedList<DBData>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,41 +55,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         sllDBData.clear();
-
         dbManager.getResult(sllDBData);
         mMap = googleMap;
-        int count = Integer.parseInt(sllDBData.getLast().curNum );
 
-        for(int i=0; i<= count;i++){
-            Log.i("g", String.valueOf(sllDBData.size()));
-            Log.i("g",String.valueOf(sllDBData.get(i).curlatitude));
-            Log.i("g",String.valueOf(sllDBData.get(i).curlongitude));
-            Log.i("g",sllDBData.get(i).curTodoOrEvent);
-            Log.i("g",String.valueOf(sllDBData.get(i).curCategory));
-            Log.i("g",String.valueOf(sllDBData.get(i).curHowLong));
-            Log.i("g",sllDBData.get(i).curNum);
-            Log.i("g",sllDBData.get(i).curText);
-            Log.i("g",sllDBData.get(i).curTime);
+        int count = Integer.parseInt(sllDBData.getLast().curNum )+1;
 
+        for(int i=0; i< iter;i++){
+            Log.e("value", String.valueOf(count));
+            Log.e("value",String.valueOf(sllDBData.get(i).curlatitude));
+            Log.e("value",String.valueOf(sllDBData.get(i).curlongitude));
+            Log.e("value",sllDBData.get(i).curTodoOrEvent);
+            Log.e("value",String.valueOf(sllDBData.get(i).curCategory));
+            Log.e("value",String.valueOf(sllDBData.get(i).curHowLong));
+            Log.e("value",sllDBData.get(i).curNum);
+            Log.e("value",sllDBData.get(i).curText);
+            Log.e("value",sllDBData.get(i).curTime);
 
         }
 
 
 
-        for (int i = 0; i <= count; i++) {
+        for (int i = 0; i < iter; i++) {
             MarkerOptions opt = new MarkerOptions();
             opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
-            Log.d("db",String.valueOf(sllDBData.get(i).curlatitude));
-            Log.d("db",String.valueOf(sllDBData.get(i).curlongitude));
+            Log.e("value",String.valueOf(sllDBData.get(i).curlatitude));
+            Log.e("value",String.valueOf(sllDBData.get(i).curlongitude));
             opt.title(sllDBData.get(i).curNum);
-            Log.d("db",sllDBData.get(i).curNum);
+            Log.e("value",sllDBData.get(i).curNum);
             opt.snippet(sllDBData.get(i).curText + "@" + sllDBData.get(i).curTime);
             //mMap.addMarker(opt).showInfoWindow();
             mMap.addMarker(opt).showInfoWindow();
             if (i != 0) {
                 mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(sllDBData.get(i - 1).curlatitude), Double.valueOf(sllDBData.get(i - 1).curlongitude)), new LatLng(Double.valueOf(sllDBData.get(i).curlatitude), Double.valueOf(sllDBData.get(i).curlongitude))).width(5).color(Color.RED));
             }
-            Log.d("db","한바퀴돔");
+            Log.e("value","한바퀴돔");
         }
         mMap.moveCamera(newLatLng(new LatLng(sllDBData.get(0).curlatitude, sllDBData.get(0).curlongitude)));
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
