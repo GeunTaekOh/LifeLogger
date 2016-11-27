@@ -2,7 +2,6 @@ package com.taek_aaa.locationdiary;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
 
@@ -43,7 +42,7 @@ public class List extends Activity {
             arystr[i] = category_arr[i];
         }
         sort();
-        setRank();
+        //setRank();
 
     }
 
@@ -65,7 +64,7 @@ public class List extends Activity {
         }
     }
 
-    public void setRank() {
+    /*public void setRank() {
         TextView tv1 = (TextView) findViewById(R.id.tv1);
         TextView tv2 = (TextView) findViewById(R.id.tv2);
         TextView tv3 = (TextView) findViewById(R.id.tv3);
@@ -75,5 +74,5 @@ public class List extends Activity {
         tv2.setText("2nd. " + arystr[2] + " : " + ary[2]);
         tv3.setText("3th. " + arystr[1] + " : " + ary[1]);
         tv4.setText("4th. " + arystr[0] + " : " + ary[0]);
-    }
+    }*/
 }

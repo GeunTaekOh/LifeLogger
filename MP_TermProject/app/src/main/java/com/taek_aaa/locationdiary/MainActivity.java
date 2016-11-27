@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, List.class));
                 break;
             case R.id.goalbtn:
+                startActivity(new Intent(this, GoalActivity.class));
                 break;
             case R.id.exitbtn:
                 finish();
