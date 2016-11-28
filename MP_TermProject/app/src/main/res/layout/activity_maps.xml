@@ -17,21 +17,28 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#F5FAFA"
+        android:layout_gravity="center"
+        >
 
         <Button
             android:id="@+id/deletebtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClickDeletebtn"
-            android:text="delete" />
+            android:text="delete"
+            android:layout_margin="5dp"
+            />
 
         <Button
             android:id="@+id/insetbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClickInsertbtn"
-            android:text="insert" />
+            android:text="insert"
+            android:layout_margin="5dp"
+            />
     </LinearLayout>
 
 

@@ -21,9 +21,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +43,7 @@ import static java.lang.System.exit;
 
 public class InsertActivity extends Activity {
 
-    ScrollView scroll;
+    HorizontalScrollView scroll;
     //int iter = 0;
     MyLocationListener mll = null;
     SQLiteDatabase db;
@@ -69,7 +69,7 @@ public class InsertActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
       //  iter = dbManager.getIter();
-        scroll = (ScrollView) findViewById(R.id.scrollView);
+        scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         scroll.setVerticalScrollBarEnabled(true);
         TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
         stopWatchtv.setText("00:00:00");

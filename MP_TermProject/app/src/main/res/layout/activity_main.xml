@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-
+    android:background="#F5FAFA"
     >
 
     <TextView
@@ -70,8 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200sp"
         android:layout_marginTop="70sp"
-        android:background="@drawable/exit"
+        android:background="@drawable/exitbtn"
         android:onClick="onClick"
+
 
         />
 
