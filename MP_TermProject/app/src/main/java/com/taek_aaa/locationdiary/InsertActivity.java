@@ -36,6 +36,7 @@ import static com.taek_aaa.locationdiary.DataSet.interval_Time;
 import static com.taek_aaa.locationdiary.DataSet.iter;
 import static com.taek_aaa.locationdiary.DataSet.latitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
+import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
 import static com.taek_aaa.locationdiary.R.id.spinner;
 import static java.lang.System.exit;
@@ -67,6 +68,7 @@ public class InsertActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
+      //  iter = dbManager.getIter();
         scroll = (ScrollView) findViewById(R.id.scrollView);
         scroll.setVerticalScrollBarEnabled(true);
         TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
@@ -232,6 +234,8 @@ public class InsertActivity extends Activity {
         startbtn.setText("Start");
         t = 1;
         Log.i("test", "찍힘");
+
+        dbManager.getResult(sllDBData);
         try {
             dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, String.valueOf(iter), strText, resulttime);
             Log.i("value", "db에값을입력하였습니다");

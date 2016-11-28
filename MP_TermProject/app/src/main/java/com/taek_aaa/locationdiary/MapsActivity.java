@@ -1,16 +1,18 @@
 package com.taek_aaa.locationdiary;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -24,15 +26,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.LinkedList;
-
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
 import static com.taek_aaa.locationdiary.DataSet.iter;
+import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    DBManager dbManager = new DBManager(this, "logger.db", null, 1);
+    final DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     private GoogleMap mMap;
     Spinner spinner;
     String type_str = "";
@@ -40,7 +41,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LinearLayout type_ll;
     static String outermemo;
     static int temp;
-    LinkedList<DBData> sllDBData = new LinkedList<DBData>();
+    //LinkedList<DBData> sllDBData = new LinkedList<DBData>();
+    Bitmap photo;
+    final int PICK_FROM_ALBUM = 101;
+    AlertDialog tempad;
+    Dialog dialog;
+    ImageView imageView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +58,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (requestCode){
+            case PICK_FROM_ALBUM:
+                Uri uri=data.getData();
+                try{
+                    photo = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                    dialog = new Dialog(this);
+                    dialog.setOwnerActivity(this);
+                    dialog.setContentView(R.layout.activity_dialog);
+                    imageView=(ImageView)dialog.findViewById(R.id.imageview);
+                    //type_ll.addView(imageView);
+                    imageView.setImageBitmap(photo);
+                    //setContentView(imageView);
+////이부분수정
+                    dialog.show();
+                    //tempad.show();
+
+
+                }catch (Exception e){
+                    e.getStackTrace();
+                }
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         sllDBData.clear();
         dbManager.getResult(sllDBData);
         mMap = googleMap;
+       // iter = dbManager.getIter();
 
         int count = Integer.parseInt(sllDBData.getLast().curNum )+1;
-
+        Log.e("value", String.valueOf(iter));
         for(int i=0; i< iter;i++){
-            Log.e("value", String.valueOf(count));
+            Log.e("value", String.valueOf(iter));
             Log.e("value",String.valueOf(sllDBData.get(i).curlatitude));
             Log.e("value",String.valueOf(sllDBData.get(i).curlongitude));
             Log.e("value",sllDBData.get(i).curTodoOrEvent);
@@ -69,7 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e("value",sllDBData.get(i).curNum);
             Log.e("value",sllDBData.get(i).curText);
             Log.e("value",sllDBData.get(i).curTime);
-
         }
 
 
@@ -94,12 +126,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onInfoWindowClick(Marker marker) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
                 type_ll = new LinearLayout(MapsActivity.this);
+
                 //setSpinner();
                 //setEditText();
                 //type_ll.addView(spinner);
                 //type_ll.addView(editText);
                 //type_ll.setPadding(50, 0, 0, 0);
                 type_ll.setPadding(0, 0, 0, 0);
+//                type_ll.addView(tempImageView = (ImageView)dialog.findViewById(R.id.imageview));
                 int a = Integer.valueOf(marker.getTitle());
                 temp = a;
                 adb
@@ -116,9 +150,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .setNeutralButton("사진 추가",new DialogInterface.OnClickListener(){
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-                                intent.setType("image*//*");
-                                startActivity(intent);
+
+                                Intent intent = new Intent(Intent.ACTION_PICK);
+                                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(intent,PICK_FROM_ALBUM);
 
                             }
                         })
@@ -130,14 +166,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 startActivity(intent);
                             }
                         });
+
                 AlertDialog ad = adb.create();
+                tempad=ad;
                 ad.show();
             }
 
         });
     }
 
-    public void setSpinner() {
+    /*public void setSpinner() {
         spinner = new Spinner(this);
         ArrayAdapter memoAdapter = new ArrayAdapter(MapsActivity.this, android.R.layout.simple_spinner_item, category_arr);
         memoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -154,11 +192,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+    */
 
-    public void setEditText() {
-        editText = new EditText(this);
-        editText.setHint("메모를 입력하세요.");
-        editText.setHintTextColor(0x50000000);
-        editText.setEms(12);
-    }
+
 }

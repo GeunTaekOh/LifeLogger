@@ -2,77 +2,68 @@ package com.taek_aaa.locationdiary;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-import static com.taek_aaa.locationdiary.DataSet.category_arr;
+import static com.taek_aaa.locationdiary.DataSet.mainCategory_arr_index;
+import static com.taek_aaa.locationdiary.DataSet.subCategory_arr_index;
 
 
 public class List extends Activity {
-    int ary[] = new int[7];
-    String arystr[] = new String[7];
+    Spinner mainspinner;
+    Spinner subspinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        // int alsize = llistLatitude.size();
-        int valueOfCategory[] = new int[category_arr.length];
 
-      /*  for(int i=0; i<alsize; i++) {
-            if(llistCategory.get(i).toString().equals(category_arr[0])){
-                valueOfCategory[0]++;
-            }
-            else if (llistCategory.get(i).toString().equals(category_arr[1])){
-                valueOfCategory[1]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[2])){
-                valueOfCategory[2]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[3])){
-                valueOfCategory[3]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[4])){
-                valueOfCategory[4]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[5])){
-                valueOfCategory[5]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[6])) {
-                valueOfCategory[6]++;
-            }else if(llistCategory.get(i).toString().equals(category_arr[7])) {
-                valueOfCategory[7]++;
-            }
-        }*/
-        for (int i = 0; i < category_arr.length; i++) {
-            ary[i] = valueOfCategory[i];
-            arystr[i] = category_arr[i];
-        }
-        sort();
-        //setRank();
+        mainspinner = (Spinner) findViewById(R.id.mainCategoryspinner);
+        subspinner = (Spinner) findViewById(R.id.subCategoryspinner);
+        mainspinner.setSelection(0);
+        subspinner.setSelection(0);
 
-    }
+        mainspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-    public void sort() {
-        int tmp;
-        String tmpstr;
-
-        for (int i = 0; i < ary.length - 1; i++) {
-            for (int j = i + 1; j < ary.length; j++) {
-                if (ary[i] > ary[j]) {
-                    tmp = ary[i];
-                    tmpstr = arystr[i];
-                    ary[i] = ary[j];
-                    arystr[i] = arystr[j];
-                    ary[j] = tmp;
-                    arystr[j] = tmpstr;
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mainCategory_arr_index = position;
+                switch (position) {
+                    case (0):
+                        populateSubSpinners(R.array.subSpinnerContentsCategory);
+                        break;
+                    case (1):
+                        populateSubSpinners(R.array.subSpinnerContentsTime);
                 }
             }
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        subspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                subCategory_arr_index = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
-    /*public void setRank() {
-        TextView tv1 = (TextView) findViewById(R.id.tv1);
-        TextView tv2 = (TextView) findViewById(R.id.tv2);
-        TextView tv3 = (TextView) findViewById(R.id.tv3);
-        TextView tv4 = (TextView) findViewById(R.id.tv4);
+    private void populateSubSpinners(int itemNum) {
+        ArrayAdapter<CharSequence> fAdapter;
+        fAdapter = ArrayAdapter.createFromResource(this,
+                itemNum,
+                android.R.layout.simple_spinner_item);
+        fAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        subspinner.setAdapter(fAdapter);
+    }
 
-        tv1.setText("1st. " + arystr[3] + " : " + ary[3]);
-        tv2.setText("2nd. " + arystr[2] + " : " + ary[2]);
-        tv3.setText("3th. " + arystr[1] + " : " + ary[1]);
-        tv4.setText("4th. " + arystr[0] + " : " + ary[0]);
-    }*/
+
 }

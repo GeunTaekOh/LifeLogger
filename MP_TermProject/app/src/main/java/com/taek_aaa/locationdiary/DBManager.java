@@ -81,4 +81,16 @@ public class DBManager extends SQLiteOpenHelper {
         cursor.close();
         db.close();
     }
+/*
+    public int getIter(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+
+        while (cursor.moveToNext()) {
+
+            getIterResult = cursor.getColumnIndex("num");
+        }
+
+        return getIterResult;
+    }*/
 }

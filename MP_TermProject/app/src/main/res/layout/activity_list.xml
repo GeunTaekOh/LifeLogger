@@ -4,68 +4,78 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<RadioGroup
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_gravity="center"
-    android:padding="20sp"
-    >
-    <RadioButton
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1일"
-        android:id="@+id/oneDayRadiobtn"
-        />
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1주"
-        android:id="@+id/oneWeekRadiobtn"
-        />
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="20sp">
+
+        <RadioButton
+            android:id="@+id/oneDayRadiobtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:paddingRight="30sp"
+            android:text="1일" />
+
+        <RadioButton
+            android:id="@+id/oneWeekRadiobtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="30sp"
+            android:text="1주" />
 
 
-</RadioGroup>
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:padding="20sp"
-        >
+        android:orientation="horizontal"
+        android:padding="20sp">
 
         <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">Category</Spinner>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">Category List</Spinner>
-        <Button
+            android:id="@+id/mainCategoryspinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show"
+            android:entries="@array/mainSpinnerContents">
+
+
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/subCategoryspinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/subSpinnerContentsCategory">
+
+
+        </Spinner>
+
+        <Button
             android:id="@+id/spinnerShowbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="onClick"
-            />
+            android:text="Show" />
 
 
     </LinearLayout>
 
-<ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textStyle="bold"
-        android:id="@+id/showListTv"
-        />
+        <TextView
+            android:id="@+id/showListTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textStyle="bold" />
 
-</ScrollView>
+    </ScrollView>
 </LinearLayout>
 
