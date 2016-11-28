@@ -2,39 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:padding="20sp">
-
-        <RadioButton
-            android:id="@+id/oneDayRadiobtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:paddingRight="30sp"
-            android:text="1일" />
-
-        <RadioButton
-            android:id="@+id/oneWeekRadiobtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="30sp"
-            android:text="1주" />
-
-
-    </RadioGroup>
+    android:background="#F5FAFA"
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#ACD1E9"
         android:orientation="horizontal"
-        android:padding="20sp">
+        android:padding="10dp"
+        android:layout_margin="2dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/Text_StartDay"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:onClick="onclickstart"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=" ~ "
+            android:textColor="#000000"
+            android:textSize="5mm" />
+
+        <TextView
+            android:id="@+id/Text_EndDay"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:onClick="onclickend"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#ACD1E9"
+        android:orientation="horizontal"
+        android:padding="20sp"
+        android:layout_margin="2dp"
+        android:gravity="center"
+        >
 
         <Spinner
             android:id="@+id/mainCategoryspinner"
@@ -64,18 +91,29 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#ACD1E9"
+        android:layout_margin="2dp"
+        >
 
-
-        <TextView
-            android:id="@+id/showListTv"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textStyle="bold" />
 
-    </ScrollView>
+            >
+
+
+            <TextView
+                android:id="@+id/showListTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold" />
+
+        </ScrollView>
+    </LinearLayout>
+    >
 </LinearLayout>
 
