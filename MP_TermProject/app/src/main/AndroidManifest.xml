@@ -46,6 +46,7 @@
 
         </activity>
         <activity android:name="com.taek_aaa.locationdiary.List" />
+        <activity android:name="com.taek_aaa.locationdiary.GoalSettingActivity"/>
 
     </application>
 
