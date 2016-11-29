@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -168,5 +169,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "먼저 값을 받아주세요.", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    public void onClickMoveCamera(View v){
+        iter = dbManager.getIter();
+        for(int i=0; i<iter ; i++) {
+            mMap.animateCamera(newLatLng(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)),3000,null);
+
+        }
     }
 }
