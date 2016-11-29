@@ -3,6 +3,7 @@ package com.taek_aaa.locationdiary;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,30 +30,33 @@ public class List extends Activity {
     int iMonthe;
     int iDatee;
     int hMonthe;  //h가 붙은 것들은 사람이 아는 값
-
-
+    final static int CATEGORY_SEQ = 1001;
+    final static int TIME_SEQ = 1002;
+    int state;
+    TextView showre ;
+    DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        startdayTv = (TextView)findViewById(R.id.Text_StartDay);
-        enddayTv = (TextView)findViewById(R.id.Text_EndDay);
+        startdayTv = (TextView) findViewById(R.id.Text_StartDay);
+        enddayTv = (TextView) findViewById(R.id.Text_EndDay);
 
         Calendar today;
         today = Calendar.getInstance();
         iYears = today.get(Calendar.YEAR);
-        iMonths = today.get(Calendar.MONTH) ;
+        iMonths = today.get(Calendar.MONTH);
         iDates = today.get(Calendar.DAY_OF_MONTH);
-        hMonths = today.get(Calendar.MONTH)+1;
+        hMonths = today.get(Calendar.MONTH) + 1;
         iYeare = today.get(Calendar.YEAR);
-        iMonthe = today.get(Calendar.MONTH) ;
+        iMonthe = today.get(Calendar.MONTH);
         iDatee = today.get(Calendar.DAY_OF_MONTH);
-        hMonthe = today.get(Calendar.MONTH)+1;
+        hMonthe = today.get(Calendar.MONTH) + 1;
+        showre = (TextView)findViewById(R.id.showListTextview);
 
 
         startdayTv.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         enddayTv.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
-
 
 
         mainspinner = (Spinner) findViewById(R.id.mainCategoryspinner);
@@ -60,6 +64,7 @@ public class List extends Activity {
         mainspinner.setSelection(0);
         subspinner.setSelection(0);
 
+        //메인스피너
         mainspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -68,22 +73,28 @@ public class List extends Activity {
                 switch (position) {
                     case (0):
                         populateSubSpinners(R.array.subSpinnerContentsCategory);
+                        state = CATEGORY_SEQ;
                         break;
                     case (1):
                         populateSubSpinners(R.array.subSpinnerContentsTime);
+                        state = TIME_SEQ;
+                        break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
+        //서브스피너
         subspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 subCategory_arr_index = position;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -100,14 +111,14 @@ public class List extends Activity {
         subspinner.setAdapter(fAdapter);
     }
 
-    public void onclickstart(View v){
+    public void onclickstart(View v) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
-                hMonths = monthOfYear+1;
+                hMonths = monthOfYear + 1;
                 TextView caltv = (TextView) findViewById(R.id.Text_StartDay);
                 caltv.setText(year + "년 " + hMonths + "월 " + dayOfMonth + "일");
 
@@ -120,14 +131,15 @@ public class List extends Activity {
         };
         new DatePickerDialog(this, dateSetListener, iYears, iMonths, iDates).show();
     }
-    public void onclickend(View v){
+
+    public void onclickend(View v) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 // TODO Auto-generated method stub
-                hMonthe = monthOfYear+1;
+                hMonthe = monthOfYear + 1;
                 TextView caltv = (TextView) findViewById(R.id.Text_EndDay);
                 caltv.setText(year + "년 " + hMonthe + "월 " + dayOfMonth + "일");
 
@@ -142,14 +154,30 @@ public class List extends Activity {
 
     }
 
-    public void onClickspinnerShowbtn(View v){
-        final int datestart = iYears*10000 + iMonths*100 + iDates;
-        final int dateend = iYeare*10000 + iMonthe*100 + iDatee;
+    public void onClickspinnerShowbtn(View v) {
+        final int datestart = iYears * 10000 + iMonths * 100 + iDates;
+        final int dateend = iYeare * 10000 + iMonthe * 100 + iDatee;
+        int parstart = hMonths*100 + iDates ;
+        int parend = hMonthe*100 + iDatee ;
+
+       // TextView showre = (TextView)findViewById(R.id.showListTextview);
+
+
         if (datestart > dateend) {
             Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
         }
 
+        if(state == CATEGORY_SEQ) {
 
+
+            int showTotalResult = dbManager.staticslist(parstart,parend,subCategory_arr_index);
+            Log.e("pp",""+showTotalResult);
+            showre.setText(""+showTotalResult);
+
+
+
+        }
     }
+
 
 }

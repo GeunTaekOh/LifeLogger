@@ -94,4 +94,37 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
 
+    public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        int totaltime=0;
+
+
+        while (cursor.moveToNext()){
+            String date = cursor.getString(cursor.getColumnIndex("time"));
+            int category = cursor.getInt(cursor.getColumnIndex("category"));
+            int howlongtime = cursor.getInt(cursor.getColumnIndex("HowLong"));
+
+            int mon = Integer.parseInt(date.substring(0,2));
+            int da = Integer.parseInt(date.substring(3,5));
+            int resultdate = mon*100 + da;
+            Log.e("gt","mon : "+mon);
+            Log.e("gt","da : "+da);
+            Log.e("gt","resultdate : "+resultdate);
+            Log.e("gt","startYearMonthDate : " + startYearMonthDate);
+            Log.e("gt","endYearMonthDate : " + endYearMonthDate);
+            Log.e("gt","subcategory : " + subcategory);
+
+            if ((resultdate >= startYearMonthDate && resultdate <= endYearMonthDate) && (subcategory == category)) {
+                totaltime += howlongtime;
+                Log.e("gt","들어왔다!! : "+howlongtime);
+
+            }
+        }
+        Log.e("gt","totaltiem : "+totaltime);
+
+        return totaltime;
+
+    }
+
 }
