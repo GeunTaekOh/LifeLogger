@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.util.LinkedList;
 
+import static com.taek_aaa.locationdiary.DataSet.dbiter;
+
 public class DBManager extends SQLiteOpenHelper {
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -81,16 +83,19 @@ public class DBManager extends SQLiteOpenHelper {
         cursor.close();
         db.close();
     }
-/*
+
     public int getIter(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
 
         while (cursor.moveToNext()) {
 
-            getIterResult = cursor.getColumnIndex("num");
+
+            dbiter = Integer.parseInt(cursor.getString(cursor.getColumnIndex("num")));
         }
 
-        return getIterResult;
-    }*/
+        return dbiter;
+    }
+
+
 }

@@ -44,7 +44,6 @@ import static java.lang.System.exit;
 public class InsertActivity extends Activity {
 
     HorizontalScrollView scroll;
-    //int iter = 0;
     MyLocationListener mll = null;
     SQLiteDatabase db;
     private LocationManager locationManager;
@@ -80,7 +79,6 @@ public class InsertActivity extends Activity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //llistCategory.add(iter, String.valueOf(position));
                 Log.i("test", "카테고리의" + position + "이셀렉되었습니다");
                 categoty_arr_index = position;
             }
@@ -219,6 +217,7 @@ public class InsertActivity extends Activity {
         strText = textedit.getText().toString();
         Spinner tmpspinner = (Spinner) findViewById(spinner);
 
+      //  dbiter=dbManager.getIter();
 
         Log.i("test", String.valueOf(howlongtime));
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
@@ -234,19 +233,20 @@ public class InsertActivity extends Activity {
         startbtn.setText("Start");
         t = 1;
         Log.i("test", "찍힘");
-
+        sllDBData.clear();
         dbManager.getResult(sllDBData);
         try {
             dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, String.valueOf(iter), strText, resulttime);
-            Log.i("value", "db에값을입력하였습니다");
-            Log.i("value", "" + latitudeDouble);
-            Log.i("value", "" + longitudeDouble);
-            Log.i("value", "" + stoDoOrEvent);
-            Log.i("value", "" + categoty_arr_index);
-            Log.i("value", "" + ihowlongtime);
-            Log.i("value", "" + String.valueOf(iter));
-            Log.i("value", "" + strText); //텍스트부분.하.
-            Log.i("value", "" + resulttime);  // time부분.하.
+            Log.e("value", "db에값을입력하였습니다");
+            Log.e("value", "" + latitudeDouble);
+            Log.e("value", "" + longitudeDouble);
+            Log.e("value", "" + stoDoOrEvent);
+            Log.e("value", "" + categoty_arr_index);
+            Log.e("value", "" + ihowlongtime);
+            //Log.e("value", "" + String.valueOf(dbiter));
+            Log.e("value", "" + String.valueOf(iter));
+            Log.e("value", "" + strText);
+            Log.e("value", "" + resulttime);
 
         } catch (Exception e) {
             Toast.makeText(this, "데이터 입력에 오류가 있습니다", Toast.LENGTH_SHORT).show();

@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button"
             android:onClick="onClick"
-            android:text="목표 설정하기"
+            android:text="목표 확인하기"
 
             />
 
