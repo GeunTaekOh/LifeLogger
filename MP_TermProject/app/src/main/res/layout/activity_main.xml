@@ -70,8 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200sp"
         android:layout_marginTop="70sp"
-        android:background="@drawable/exitbtn"
+        android:background="@drawable/standby2"
         android:onClick="onClick"
+
 
 
         />

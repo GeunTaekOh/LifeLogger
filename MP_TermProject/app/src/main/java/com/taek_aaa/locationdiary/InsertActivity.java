@@ -244,7 +244,8 @@ public class InsertActivity extends Activity {
         sllDBData.clear();
         dbManager.getResult(sllDBData);
         try {
-            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, itc.getIteration(), strText, resulttime);
+            iter = dbManager.getIter();
+            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, iter, strText, resulttime);
             Log.e("bbb",""+itc.getIteration()+"insert다음");
             Log.e("value", "db에값을입력하였습니다");
             Log.e("value", "" + latitudeDouble);

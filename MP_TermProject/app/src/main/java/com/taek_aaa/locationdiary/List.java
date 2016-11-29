@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -138,6 +139,16 @@ public class List extends Activity {
             }
         };
         new DatePickerDialog(this, dateSetListener, iYeare, iMonthe, iDatee).show();
+
+    }
+
+    public void onClickspinnerShowbtn(View v){
+        final int datestart = iYears*10000 + iMonths*100 + iDates;
+        final int dateend = iYeare*10000 + iMonthe*100 + iDatee;
+        if (datestart > dateend) {
+            Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

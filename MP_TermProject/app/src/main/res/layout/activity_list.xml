@@ -85,22 +85,26 @@
             android:id="@+id/spinnerShowbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClick"
+            android:onClick="onClickspinnerShowbtn"
             android:text="Show" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
         android:background="#ACD1E9"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="20sp"
         android:layout_margin="2dp"
+        android:gravity="center"
         >
 
         <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400sp"
 
             >
 
@@ -108,7 +112,7 @@
             <TextView
                 android:id="@+id/showListTv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400sp"
                 android:text=""
                 android:textStyle="bold" />
 
