@@ -87,7 +87,7 @@ public class DBManager extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
         int tempdbiter=0;
         while (cursor.moveToNext()) {
-            tempdbiter = cursor.getInt(cursor.getColumnIndex("num"));
+            tempdbiter = cursor.getInt(cursor.getColumnIndex("_id"));
             Log.e("qwe", String.valueOf(tempdbiter));
         }
         return tempdbiter;

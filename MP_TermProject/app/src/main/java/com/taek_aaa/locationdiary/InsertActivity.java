@@ -35,6 +35,7 @@ import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index;
 import static com.taek_aaa.locationdiary.DataSet.dbiter;
 import static com.taek_aaa.locationdiary.DataSet.interval_Time;
 import static com.taek_aaa.locationdiary.DataSet.itc;
+import static com.taek_aaa.locationdiary.DataSet.iter;
 import static com.taek_aaa.locationdiary.DataSet.latitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
@@ -69,7 +70,8 @@ public class InsertActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
-      //  iter = dbManager.getIter();
+        iter = dbManager.getIter();
+        Log.e("pp",""+iter+"디비의 총 행");
         //itc = new IterationClass();
 
         Log.e("bbb",""+itc.getIteration()+"setzero한다음");
@@ -266,6 +268,9 @@ public class InsertActivity extends Activity {
 
         itc.intcrease();
         Log.e("bbb",""+itc.getIteration()+"itc increase하고난다음");
+        iter = dbManager.getIter();
+        Log.e("pp",""+iter+"디비의 총 행");
+
 
         //iter++;
     }
