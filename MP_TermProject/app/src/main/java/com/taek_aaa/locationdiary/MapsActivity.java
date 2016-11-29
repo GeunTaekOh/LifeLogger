@@ -29,7 +29,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
-import static com.taek_aaa.locationdiary.DataSet.iter;
+import static com.taek_aaa.locationdiary.DataSet.dbiter;
+import static com.taek_aaa.locationdiary.DataSet.itc;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 
@@ -48,15 +49,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     AlertDialog tempad;
     Dialog dialog;
     ImageView imageView;
+    //IterationClass itc;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        //itc = new IterationClass();
+
         MapsInitializer.initialize(getApplicationContext());
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
 
     }
@@ -91,11 +96,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sllDBData.clear();
         dbManager.getResult(sllDBData);
         mMap = googleMap;
-         //dbiter = dbManager.getIter();
+        dbiter = dbManager.getIter();
         try {
             int count = Integer.parseInt(sllDBData.getLast().curNum) + 1;
-            Log.e("value", String.valueOf(iter));
-            for (int i = 0; i < iter; i++) {
+            Log.e("value", String.valueOf(itc.getIteration()));
+            Log.e("bbb",""+itc.getIteration()+"맵액티비티 트라이문안에");
+            for (int i = 0; i < itc.getIteration(); i++) {
                 Log.e("value", String.valueOf(sllDBData.get(i).curlatitude));
                 Log.e("value", String.valueOf(sllDBData.get(i).curlongitude));
                 Log.e("value", sllDBData.get(i).curTodoOrEvent);
@@ -107,7 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
 
-            for (int i = 0; i < iter; i++) {
+            for (int i = 0; i < itc.getIteration(); i++) {
+                Log.e("bbb",""+itc.getIteration()+"맵액티비티 포문안에");
                 MarkerOptions opt = new MarkerOptions();
                 opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
                 opt.title(sllDBData.get(i).curNum);
@@ -175,6 +182,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             });
         } catch (Exception e) {
+            e.getMessage();
             Toast.makeText(this, "먼저 값을 받아주세요.", Toast.LENGTH_SHORT).show();
         }
 

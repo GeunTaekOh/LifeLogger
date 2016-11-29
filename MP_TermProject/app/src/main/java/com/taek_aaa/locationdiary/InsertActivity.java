@@ -32,8 +32,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index;
+import static com.taek_aaa.locationdiary.DataSet.dbiter;
 import static com.taek_aaa.locationdiary.DataSet.interval_Time;
-import static com.taek_aaa.locationdiary.DataSet.iter;
+import static com.taek_aaa.locationdiary.DataSet.itc;
 import static com.taek_aaa.locationdiary.DataSet.latitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.longitudeDouble;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
@@ -62,12 +63,17 @@ public class InsertActivity extends Activity {
     Button confirm = null;
     RadioButton selectedbtn = null;
     DBManager dbManager = new DBManager(this, "logger.db", null, 1);
+    //IterationClass itc;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
       //  iter = dbManager.getIter();
+        //itc = new IterationClass();
+
+        Log.e("bbb",""+itc.getIteration()+"setzero한다음");
+
         scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
         scroll.setVerticalScrollBarEnabled(true);
         TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
@@ -217,7 +223,7 @@ public class InsertActivity extends Activity {
         strText = textedit.getText().toString();
         Spinner tmpspinner = (Spinner) findViewById(spinner);
 
-      //  dbiter=dbManager.getIter();
+        dbiter=dbManager.getIter();
 
         Log.i("test", String.valueOf(howlongtime));
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
@@ -236,15 +242,16 @@ public class InsertActivity extends Activity {
         sllDBData.clear();
         dbManager.getResult(sllDBData);
         try {
-            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, String.valueOf(iter), strText, resulttime);
+            dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, itc.getIteration(), strText, resulttime);
+            Log.e("bbb",""+itc.getIteration()+"insert다음");
             Log.e("value", "db에값을입력하였습니다");
             Log.e("value", "" + latitudeDouble);
             Log.e("value", "" + longitudeDouble);
             Log.e("value", "" + stoDoOrEvent);
             Log.e("value", "" + categoty_arr_index);
             Log.e("value", "" + ihowlongtime);
-            //Log.e("value", "" + String.valueOf(dbiter));
-            Log.e("value", "" + String.valueOf(iter));
+            Log.e("value", "" + String.valueOf(itc.getIteration()));
+            //Log.e("value", "" + String.valueOf(iter));
             Log.e("value", "" + strText);
             Log.e("value", "" + resulttime);
 
@@ -256,7 +263,11 @@ public class InsertActivity extends Activity {
         tmptv.setText("");
         Toast.makeText(this, "DB에 정상입력 되었습니다", Toast.LENGTH_SHORT).show();
 
-        iter++;
+
+        itc.intcrease();
+        Log.e("bbb",""+itc.getIteration()+"itc increase하고난다음");
+
+        //iter++;
     }
 
     public Runnable updateTimer = new Runnable() {
@@ -295,7 +306,8 @@ public class InsertActivity extends Activity {
         db = dbManager.getWritableDatabase() ;
         dbManager.onUpgrade(db,1,2);
         dbManager.close();
-        iter=0;
+        //iter=0;
+        itc.setZero();
         Toast.makeText(this,"DB를 삭제하였습니다",Toast.LENGTH_SHORT).show();
     }
 }

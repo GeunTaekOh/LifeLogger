@@ -8,8 +8,6 @@ import android.util.Log;
 
 import java.util.LinkedList;
 
-import static com.taek_aaa.locationdiary.DataSet.dbiter;
-
 public class DBManager extends SQLiteOpenHelper {
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -28,9 +26,9 @@ public class DBManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insert(double latitude, double longitude, String todoOrEvent, int category, int howLong, String num, String text, String time) {
+    public void insert(double latitude, double longitude, String todoOrEvent, int category, int howLong, int num, String text, String time) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + todoOrEvent + "', " + category + ", " + howLong + ", '" + num + "', '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
+        db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + todoOrEvent + "', " + category + ", " + howLong + ", " + num + ", '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
         db.close();
     }
 
@@ -68,14 +66,14 @@ public class DBManager extends SQLiteOpenHelper {
             dbdata.curNum = numcur;
             dbdata.curText = textcur;
             dbdata.curTime = timecur;
-            Log.i("ttt",String.valueOf(dbdata.curlatitude));
-            Log.i("ttt",String.valueOf(dbdata.curlongitude));
-            Log.i("ttt",dbdata.curTodoOrEvent);
-            Log.i("ttt",String.valueOf(dbdata.curCategory));
-            Log.i("ttt",String.valueOf(dbdata.curHowLong));
-            Log.i("ttt",dbdata.curNum);
-            Log.i("ttt",dbdata.curText);
-            Log.i("ttt",dbdata.curTime);
+            Log.i("tttt",String.valueOf(dbdata.curlatitude));
+            Log.i("tttt",String.valueOf(dbdata.curlongitude));
+            Log.i("tttt",dbdata.curTodoOrEvent);
+            Log.i("tttt",String.valueOf(dbdata.curCategory));
+            Log.i("tttt",String.valueOf(dbdata.curHowLong));
+            Log.i("tttt",dbdata.curNum);
+            Log.i("tttt",dbdata.curText);
+            Log.i("tttt",dbdata.curTime);
 
             sllDBData.add(dbdata);
             t++;
@@ -87,14 +85,12 @@ public class DBManager extends SQLiteOpenHelper {
     public int getIter(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-
+        int tempdbiter=0;
         while (cursor.moveToNext()) {
-
-
-            dbiter = Integer.parseInt(cursor.getString(cursor.getColumnIndex("num")));
+            tempdbiter = cursor.getInt(cursor.getColumnIndex("num"));
+            Log.e("qwe", String.valueOf(tempdbiter));
         }
-
-        return dbiter;
+        return tempdbiter;
     }
 
 
