@@ -7,7 +7,7 @@ import android.os.Bundle;
  * Created by taek_aaa on 2016. 11. 29..
  */
 
-public class GoalSettingActivity extends Activity{
+public class GoalSettingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

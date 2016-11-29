@@ -87,23 +87,25 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lastLL"
         android:layout_width="match_parent"
         android:layout_height="400sp"
         android:layout_gravity="center"
         android:layout_margin="2dp"
+        android:background="#ACD1E9"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="20sp"
-        android:id="@+id/lastLL"
-        android:background="#ACD1E9"
-        >
+        android:padding="20sp">
 
 
         <TextView
             android:id="@+id/showListTextview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:text=""
+            android:textSize="18dp"
+            android:textStyle="italic"
 
             />
 

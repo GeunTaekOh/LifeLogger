@@ -64,20 +64,13 @@ public class InsertActivity extends Activity {
     Button confirm = null;
     RadioButton selectedbtn = null;
     DBManager dbManager = new DBManager(this, "logger.db", null, 1);
-    //IterationClass itc;
-    @Override
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
         iter = dbManager.getIter();
-        Log.e("pp",""+iter+"디비의 총 행");
-        //itc = new IterationClass();
 
-        Log.e("bbb",""+itc.getIteration()+"setzero한다음");
-
-        scroll = (HorizontalScrollView) findViewById(R.id.scrollView);
-        scroll.setVerticalScrollBarEnabled(true);
         TextView stopWatchtv = (TextView) findViewById(R.id.timerTextView);
         stopWatchtv.setText("00:00:00");
         listenerOnBtn();
@@ -87,7 +80,6 @@ public class InsertActivity extends Activity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("test", "카테고리의" + position + "이셀렉되었습니다");
                 categoty_arr_index = position;
             }
 
@@ -225,7 +217,7 @@ public class InsertActivity extends Activity {
         strText = textedit.getText().toString();
         Spinner tmpspinner = (Spinner) findViewById(spinner);
 
-        dbiter=dbManager.getIter();
+        dbiter = dbManager.getIter();
 
         Log.i("test", String.valueOf(howlongtime));
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
@@ -246,7 +238,7 @@ public class InsertActivity extends Activity {
         try {
             iter = dbManager.getIter();
             dbManager.insert(latitudeDouble, longitudeDouble, stoDoOrEvent, categoty_arr_index, ihowlongtime, iter, strText, resulttime);
-            Log.e("bbb",""+itc.getIteration()+"insert다음");
+            Log.e("bbb", "" + itc.getIteration() + "insert다음");
             Log.e("value", "db에값을입력하였습니다");
             Log.e("value", "" + latitudeDouble);
             Log.e("value", "" + longitudeDouble);
@@ -254,7 +246,6 @@ public class InsertActivity extends Activity {
             Log.e("value", "" + categoty_arr_index);
             Log.e("value", "" + ihowlongtime);
             Log.e("value", "" + String.valueOf(itc.getIteration()));
-            //Log.e("value", "" + String.valueOf(iter));
             Log.e("value", "" + strText);
             Log.e("value", "" + resulttime);
 
@@ -268,12 +259,10 @@ public class InsertActivity extends Activity {
 
 
         itc.intcrease();
-        Log.e("bbb",""+itc.getIteration()+"itc increase하고난다음");
+        Log.e("bbb", "" + itc.getIteration() + "itc increase하고난다음");
         iter = dbManager.getIter();
-        Log.e("pp",""+iter+"디비의 총 행");
+        Log.e("pp", "" + iter + "디비의 총 행");
 
-
-        //iter++;
     }
 
     public Runnable updateTimer = new Runnable() {
@@ -308,13 +297,32 @@ public class InsertActivity extends Activity {
         });
     }
 
-    public void onClickClearDB(View v){     //디비삭제
-        db = dbManager.getWritableDatabase() ;
-        dbManager.onUpgrade(db,1,2);
-        dbManager.close();
-        //iter=0;
-        itc.setZero();
-        Toast.makeText(this,"DB를 삭제하였습니다",Toast.LENGTH_SHORT).show();
+    public void onClickClearDB(View v) {     //디비삭제
+        db = dbManager.getWritableDatabase();
+        AlertDialog.Builder adb = new AlertDialog.Builder(InsertActivity.this);
+
+        adb
+                .setTitle("경고")
+                .setCancelable(false)
+                .setMessage("정말 데이터베이스를 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbManager.onUpgrade(db, 1, 2);
+                        dbManager.close();
+                        itc.setZero();
+                        Toast.makeText(InsertActivity.this, "DB를 삭제하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog ad = adb.create();
+        ad.show();
     }
 }
 

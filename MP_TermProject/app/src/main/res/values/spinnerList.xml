@@ -12,7 +12,7 @@
 
 
     <string-array name="mainSpinnerContents">
-        <item>카테고리순</item>
+        <item>카테고리별</item>
         <item>시간순</item>
     </string-array>
     

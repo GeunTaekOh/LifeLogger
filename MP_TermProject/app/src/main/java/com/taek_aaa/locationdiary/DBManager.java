@@ -35,9 +35,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void getResult(LinkedList<DBData> sllDBData) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-        int t=0;
 
-        // c = cursor;
         while (cursor.moveToNext()) {
             double latitudecur = cursor.getDouble(cursor.getColumnIndex("latitude"));
             double longitudecur = cursor.getDouble(cursor.getColumnIndex("longitude"));
@@ -48,14 +46,14 @@ public class DBManager extends SQLiteOpenHelper {
             String textcur = cursor.getString(cursor.getColumnIndex("text"));
             String timecur = cursor.getString(cursor.getColumnIndex("time"));
 
-            Log.i("tt",String.valueOf(latitudecur));
-            Log.i("tt",String.valueOf(longitudecur));
-            Log.i("tt",toDoOrEventcur);
-            Log.i("tt",String.valueOf(categorycur));
-            Log.i("tt",String.valueOf(howLongcur));
-            Log.i("tt",numcur);
-            Log.i("tt",textcur);
-            Log.i("tt",timecur);
+            Log.i("tt", String.valueOf(latitudecur));
+            Log.i("tt", String.valueOf(longitudecur));
+            Log.i("tt", toDoOrEventcur);
+            Log.i("tt", String.valueOf(categorycur));
+            Log.i("tt", String.valueOf(howLongcur));
+            Log.i("tt", numcur);
+            Log.i("tt", textcur);
+            Log.i("tt", timecur);
 
             DBData dbdata = new DBData();
             dbdata.curlatitude = latitudecur;
@@ -66,26 +64,25 @@ public class DBManager extends SQLiteOpenHelper {
             dbdata.curNum = numcur;
             dbdata.curText = textcur;
             dbdata.curTime = timecur;
-            Log.i("tttt",String.valueOf(dbdata.curlatitude));
-            Log.i("tttt",String.valueOf(dbdata.curlongitude));
-            Log.i("tttt",dbdata.curTodoOrEvent);
-            Log.i("tttt",String.valueOf(dbdata.curCategory));
-            Log.i("tttt",String.valueOf(dbdata.curHowLong));
-            Log.i("tttt",dbdata.curNum);
-            Log.i("tttt",dbdata.curText);
-            Log.i("tttt",dbdata.curTime);
+            Log.i("tttt", String.valueOf(dbdata.curlatitude));
+            Log.i("tttt", String.valueOf(dbdata.curlongitude));
+            Log.i("tttt", dbdata.curTodoOrEvent);
+            Log.i("tttt", String.valueOf(dbdata.curCategory));
+            Log.i("tttt", String.valueOf(dbdata.curHowLong));
+            Log.i("tttt", dbdata.curNum);
+            Log.i("tttt", dbdata.curText);
+            Log.i("tttt", dbdata.curTime);
 
             sllDBData.add(dbdata);
-            t++;
         }
         cursor.close();
         db.close();
     }
 
-    public int getIter(){
+    public int getIter() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-        int tempdbiter=0;
+        int tempdbiter = 0;
         while (cursor.moveToNext()) {
             tempdbiter = cursor.getInt(cursor.getColumnIndex("_id"));
             Log.e("qwe", String.valueOf(tempdbiter));
@@ -94,37 +91,34 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
 
-    public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory){
+    public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-        int totaltime=0;
-
-
-        while (cursor.moveToNext()){
+        int totaltime = 0;
+        while (cursor.moveToNext()) {
             String date = cursor.getString(cursor.getColumnIndex("time"));
             int category = cursor.getInt(cursor.getColumnIndex("category"));
             int howlongtime = cursor.getInt(cursor.getColumnIndex("HowLong"));
 
-            int mon = Integer.parseInt(date.substring(0,2));
-            int da = Integer.parseInt(date.substring(3,5));
-            int resultdate = mon*100 + da;
-            Log.e("gt","mon : "+mon);
-            Log.e("gt","da : "+da);
-            Log.e("gt","resultdate : "+resultdate);
-            Log.e("gt","startYearMonthDate : " + startYearMonthDate);
-            Log.e("gt","endYearMonthDate : " + endYearMonthDate);
-            Log.e("gt","subcategory : " + subcategory);
+            int mon = Integer.parseInt(date.substring(0, 2));
+            int da = Integer.parseInt(date.substring(3, 5));
+            int resultdate = mon * 100 + da;
+            Log.e("gt", "mon : " + mon);
+            Log.e("gt", "da : " + da);
+            Log.e("gt", "resultdate : " + resultdate);
+            Log.e("gt", "startYearMonthDate : " + startYearMonthDate);
+            Log.e("gt", "endYearMonthDate : " + endYearMonthDate);
+            Log.e("gt", "subcategory : " + subcategory);
 
             if ((resultdate >= startYearMonthDate && resultdate <= endYearMonthDate) && (subcategory == category)) {
                 totaltime += howlongtime;
-                Log.e("gt","들어왔다!! : "+howlongtime);
-
+                Log.e("gt", "들어왔다!! : " + howlongtime);
             }
         }
-        Log.e("gt","totaltiem : "+totaltime);
+        Log.e("gt", "totaltiem : " + totaltime);
 
         return totaltime;
 
     }
-
+    //List에서 보여주는거에서 시간순서로 클릭하였을때 출력.
 }

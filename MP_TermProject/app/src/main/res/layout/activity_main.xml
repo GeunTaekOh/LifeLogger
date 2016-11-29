@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:orientation="vertical"
     android:background="#F5FAFA"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -72,7 +71,6 @@
         android:layout_marginTop="70sp"
         android:background="@drawable/standby2"
         android:onClick="onClick"
-
 
 
         />

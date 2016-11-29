@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -21,10 +20,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button inputBtn = (Button) findViewById(R.id.inputbtn);
-        Button mapBtn = (Button) findViewById(R.id.mapbtn);
-        Button staticBtn = (Button) findViewById(R.id.staticbtn);
-        Button goalBtn = (Button) findViewById(R.id.goalbtn);
 
         setContentView(R.layout.activity_main);
 

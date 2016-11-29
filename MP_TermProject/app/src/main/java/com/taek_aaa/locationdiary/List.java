@@ -3,7 +3,6 @@ package com.taek_aaa.locationdiary;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import static com.taek_aaa.locationdiary.DataSet.category_arr;
 import static com.taek_aaa.locationdiary.DataSet.mainCategory_arr_index;
 import static com.taek_aaa.locationdiary.DataSet.subCategory_arr_index;
 
@@ -33,8 +33,9 @@ public class List extends Activity {
     final static int CATEGORY_SEQ = 1001;
     final static int TIME_SEQ = 1002;
     int state;
-    TextView showre ;
+    TextView showre;
     DBManager dbManager = new DBManager(this, "logger.db", null, 1);
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class List extends Activity {
         iMonthe = today.get(Calendar.MONTH);
         iDatee = today.get(Calendar.DAY_OF_MONTH);
         hMonthe = today.get(Calendar.MONTH) + 1;
-        showre = (TextView)findViewById(R.id.showListTextview);
+        showre = (TextView) findViewById(R.id.showListTextview);
 
 
         startdayTv.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
@@ -74,9 +75,11 @@ public class List extends Activity {
                     case (0):
                         populateSubSpinners(R.array.subSpinnerContentsCategory);
                         state = CATEGORY_SEQ;
+                        showre.setText("");
                         break;
                     case (1):
                         populateSubSpinners(R.array.subSpinnerContentsTime);
+                        showre.setText("");
                         state = TIME_SEQ;
                         break;
                 }
@@ -93,6 +96,7 @@ public class List extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 subCategory_arr_index = position;
+
             }
 
             @Override
@@ -157,24 +161,28 @@ public class List extends Activity {
     public void onClickspinnerShowbtn(View v) {
         final int datestart = iYears * 10000 + iMonths * 100 + iDates;
         final int dateend = iYeare * 10000 + iMonthe * 100 + iDatee;
-        int parstart = hMonths*100 + iDates ;
-        int parend = hMonthe*100 + iDatee ;
+        int parstart = hMonths * 100 + iDates;
+        int parend = hMonthe * 100 + iDatee;
 
-       // TextView showre = (TextView)findViewById(R.id.showListTextview);
+        // TextView showre = (TextView)findViewById(R.id.showListTextview);
 
 
         if (datestart > dateend) {
             Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
+            showre.setText("");
         }
 
-        if(state == CATEGORY_SEQ) {
+        if (state == CATEGORY_SEQ) {
+            int showTotalResult = dbManager.staticslist(parstart, parend, subCategory_arr_index);
+            ConvertSecondtoTime cst = new ConvertSecondtoTime();
+            cst.transferTime(showTotalResult);
+            String h = cst.getHour();
+            String m = cst.getMinute();
+            String s = cst.getSecond();
 
 
-            int showTotalResult = dbManager.staticslist(parstart,parend,subCategory_arr_index);
-            Log.e("pp",""+showTotalResult);
-            showre.setText(""+showTotalResult);
-
-
+            showre.setText("" + category_arr[subCategory_arr_index] + "에 소요한 총 시간은 " + "" + h + "시간 " + m + "분 " + s + "초 입니다.");
+        } else if (state == TIME_SEQ) {
 
         }
     }

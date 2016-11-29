@@ -6,22 +6,23 @@ package com.taek_aaa.locationdiary;
 
 public class IterationClass {
     private int it;
-    public int setZero(){
+
+    public int setZero() {
         it = 0;
         return it;
     }
 
-
-    public int getIteration(){
+    public int getIteration() {
         return it;
     }
 
-    public int intcrease(){
-        it = it +1;
+    public int intcrease() {
+        it = it + 1;
         return it;
     }
-    public int sum(int n){
-        it = it+n;
+
+    public int sum(int n) {
+        it = it + n;
         return it;
     }
 }

@@ -16,7 +16,7 @@ public class GoalActivity extends Activity {
         setContentView(R.layout.activity_goal);
     }
 
-    public void onClickSetGoal(View v){
+    public void onClickSetGoal(View v) {
         startActivity(new Intent(this, GoalSettingActivity.class));
     }
 
