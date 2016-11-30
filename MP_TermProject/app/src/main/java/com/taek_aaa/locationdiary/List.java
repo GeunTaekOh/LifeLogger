@@ -11,6 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+
 import java.util.Calendar;
 
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
@@ -33,8 +36,12 @@ public class List extends Activity {
     final static int CATEGORY_SEQ = 1001;
     final static int TIME_SEQ = 1002;
     int state;
+    int nullData;
     TextView showre;
     DBManager dbManager = new DBManager(this, "logger.db", null, 1);
+    PieChart pieChart;
+    PieChartClass mypieChart;
+    int[] numForGraph = new int[7];
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -179,9 +186,30 @@ public class List extends Activity {
             String m = cst.getMinute();
             String s = cst.getSecond();
 
-
             showre.setText("" + category_arr[subCategory_arr_index] + "에 소요한 총 시간은 " + "" + h + "시간 " + m + "분 " + s + "초 입니다.");
         } else if (state == TIME_SEQ) {
+            pieChart = (PieChart) findViewById(R.id.pie_Chart) ;
+            Description desc = new Description();
+            desc.setText("Category Stats");
+            pieChart.setDescription(desc);
+
+            for(int i=0; i<numForGraph.length; i++){
+                numForGraph[i] = dbManager.staticslist(parstart,parend,i);
+            }
+
+
+            for(int i=0; i<numForGraph.length; i++){
+                nullData+=numForGraph[i];
+            }
+            if(nullData==0){
+                Toast.makeText(this,"해당 날짜에 데이터가 없습니다.",Toast.LENGTH_SHORT).show();
+            }
+
+            mypieChart = new PieChartClass(pieChart) ;
+            mypieChart.setyData(numForGraph);
+
+
+            mypieChart.addData();
 
         }
     }

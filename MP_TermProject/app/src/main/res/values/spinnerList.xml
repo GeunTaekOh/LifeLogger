@@ -13,7 +13,7 @@
 
     <string-array name="mainSpinnerContents">
         <item>카테고리별</item>
-        <item>시간순</item>
+        <item>전체</item>
     </string-array>
     
     <string-array name="subSpinnerContentsCategory">
@@ -26,8 +26,8 @@
         <item>휴식</item>
     </string-array>
     <string-array name="subSpinnerContentsTime">
-        <item>정순</item>
-        <item>역순</item>
+        <item>그래프</item>
+
 
     </string-array>
 
