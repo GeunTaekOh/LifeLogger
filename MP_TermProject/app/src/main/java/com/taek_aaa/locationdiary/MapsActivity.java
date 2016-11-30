@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.taek_aaa.locationdiary.DataSet.category_arr;
 import static com.taek_aaa.locationdiary.DataSet.itc;
 import static com.taek_aaa.locationdiary.DataSet.iter;
+import static com.taek_aaa.locationdiary.DataSet.moveCameraIter;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 
@@ -40,9 +42,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static int temp;
     Bitmap photo;
     final int PICK_FROM_ALBUM = 101;
-    AlertDialog tempad;
+    //AlertDialog tempad;
     Dialog dialog;
     ImageView imageView;
+    Button moveCameraBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         sllDBData.clear();
+        moveCameraIter = 0;
         dbManager.getResult(sllDBData);
         mMap = googleMap;
         iter = dbManager.getIter();
@@ -159,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             });
 
                     AlertDialog ad = adb.create();
-                    tempad = ad;
+                   // tempad = ad;
                     ad.show();
                 }
 
@@ -172,11 +176,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void onClickMoveCamera(View v){
+    public void onClickMoveCamera(View v) {
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        moveCameraBtn = (Button)findViewById(R.id.moveCamerabtn) ;
         iter = dbManager.getIter();
-        for(int i=0; i<iter ; i++) {
-            mMap.animateCamera(newLatLng(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)),3000,null);
 
+
+        if (moveCameraIter == iter) {
+            Toast.makeText(this, "마지막 궤적입니다.",Toast.LENGTH_SHORT).show();
+            moveCameraBtn.setText("궤적보기");
+            moveCameraIter = 0;
+
+        }else {
+            moveCameraBtn.setText("다음");
+            mMap.moveCamera(newLatLng(new LatLng(sllDBData.get(moveCameraIter).curlatitude, sllDBData.get(moveCameraIter).curlongitude)));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2500, null);
         }
+
+        moveCameraIter++;
     }
+
 }

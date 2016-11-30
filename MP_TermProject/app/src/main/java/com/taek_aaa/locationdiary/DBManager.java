@@ -94,6 +94,11 @@ public class DBManager extends SQLiteOpenHelper {
     public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        int max = 1231;
+        if((startYearMonthDate > max)|| (endYearMonthDate > max)){
+            Log.e("error","날짜 전달값이 잘못되었습니다.");
+        }
+
         int totaltime = 0;
         while (cursor.moveToNext()) {
             String date = cursor.getString(cursor.getColumnIndex("time"));

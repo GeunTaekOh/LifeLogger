@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Toast;
 
+import static com.taek_aaa.locationdiary.DataSet.moveCameraIter;
+
 /**
  * Created by taek_aaa on 2016. 11. 26..
  */
@@ -40,6 +42,8 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, GoalActivity.class));
                 break;
             case R.id.exitbtn:
+                moveCameraIter=0;
+
                 finish();
                 break;
         }
@@ -48,11 +52,13 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - lastTimeBackPressed < 1500) {
+            moveCameraIter=0;
             finish();
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
             }
             //locationManager.removeUpdates(mll);
+
             return;
         }
         Toast.makeText(MainActivity.this, "'뒤로' 버튼을 한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();

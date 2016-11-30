@@ -166,7 +166,6 @@ public class List extends Activity {
 
         // TextView showre = (TextView)findViewById(R.id.showListTextview);
 
-
         if (datestart > dateend) {
             Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
             showre.setText("");

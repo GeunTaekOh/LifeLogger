@@ -19,5 +19,6 @@ public class DataSet {
     public static int dbiter = 0;
     public static LinkedList<DBData> sllDBData = new LinkedList<DBData>();
     public static IterationClass itc = new IterationClass();
+    public static int moveCameraIter=0;
 
 }
