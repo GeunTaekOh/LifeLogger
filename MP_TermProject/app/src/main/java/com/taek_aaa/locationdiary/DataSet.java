@@ -6,6 +6,8 @@ import java.util.LinkedList;
  * Created by taek_aaa on 2016. 11. 22..
  */
 
+
+/** static 변수들 **/
 public class DataSet {
     public static double latitudeDouble;
     public static double longitudeDouble;

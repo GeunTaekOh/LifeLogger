@@ -20,7 +20,7 @@ import static com.taek_aaa.locationdiary.DataSet.category_arr;
 import static com.taek_aaa.locationdiary.DataSet.mainCategory_arr_index;
 import static com.taek_aaa.locationdiary.DataSet.subCategory_arr_index;
 
-
+/**  통계 확인하기 눌렀을 때  **/
 public class List extends Activity {
     Spinner mainspinner;
     Spinner subspinner;
@@ -86,7 +86,7 @@ public class List extends Activity {
                         break;
                     case (1):
                         populateSubSpinners(R.array.subSpinnerContentsTime);
-                        showre.setText("");
+                        showre.setText("<Pie Chart>");
                         state = TIME_SEQ;
                         break;
                 }
@@ -165,6 +165,7 @@ public class List extends Activity {
 
     }
 
+    /** SHOW 버튼을 눌렀을 때**/
     public void onClickspinnerShowbtn(View v) {
         final int datestart = iYears * 10000 + iMonths * 100 + iDates;
         final int dateend = iYeare * 10000 + iMonthe * 100 + iDatee;
@@ -201,6 +202,7 @@ public class List extends Activity {
             for(int i=0; i<numForGraph.length; i++){
                 nullData+=numForGraph[i];
             }
+
             if(nullData==0){
                 Toast.makeText(this,"해당 날짜에 데이터가 없습니다.",Toast.LENGTH_SHORT).show();
             }

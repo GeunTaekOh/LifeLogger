@@ -4,6 +4,7 @@ package com.taek_aaa.locationdiary;
  * Created by taek_aaa on 2016. 11. 29..
  */
 
+/** iter 값에 대해 관리해주는 Class**/
 public class IterationClass {
     private int it;
 

@@ -9,6 +9,7 @@ import android.view.View;
  * Created by taek_aaa on 2016. 11. 27..
  */
 
+/** 목표 확인하기 눌렀을 때 **/
 public class GoalActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,6 +35,7 @@ import static com.taek_aaa.locationdiary.DataSet.moveCameraIter;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 
+/**  맵으로 보기 눌렀을 때  **/
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     final DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     private GoogleMap mMap;
@@ -59,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**  사진 추가 버튼을 눌러서 intent의 결과를 받는 부분 **/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -175,7 +177,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+    /** 궤적 보기 버튼을 눌렀을 때 **/
     public void onClickMoveCamera(View v) {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         moveCameraBtn = (Button)findViewById(R.id.moveCamerabtn) ;

@@ -8,6 +8,8 @@ import android.util.Log;
 
 import java.util.LinkedList;
 
+/**  DB를 관리해주는 클래스  **/
+
 public class DBManager extends SQLiteOpenHelper {
 
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -20,18 +22,21 @@ public class DBManager extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE database (_id INTEGER PRIMARY KEY AUTOINCREMENT, latitude REAL , longitude REAL, TodoOrEvent TEXT, category INTEGER, HowLong INTEGER, num TEXT, text TEXT, time TEXT);");
     }
 
+    /** DB버전을 높여서 DB삭제하는 효과를 줌  **/
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists database;");
         onCreate(db);
     }
 
+    /** DB에 데이터를 저장  **/
     public void insert(double latitude, double longitude, String todoOrEvent, int category, int howLong, int num, String text, String time) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + todoOrEvent + "', " + category + ", " + howLong + ", " + num + ", '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
         db.close();
     }
 
+    /** DB에 값을 LinkedList로 꺼냄 **/
     public void getResult(LinkedList<DBData> sllDBData) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -79,6 +84,7 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**  DB의 맨 마지막 _id를 가져오는 매서드  **/
     public int getIter() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -90,7 +96,7 @@ public class DBManager extends SQLiteOpenHelper {
         return tempdbiter;
     }
 
-
+    /** 전달받은 시작날짜 종료날짜 사이의 카테고리에 해당하는 총 걸린시간을 더한 값을 return 해주는 메서드  **/
     public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -125,5 +131,4 @@ public class DBManager extends SQLiteOpenHelper {
         return totaltime;
 
     }
-    //List에서 보여주는거에서 시간순서로 클릭하였을때 출력.
 }

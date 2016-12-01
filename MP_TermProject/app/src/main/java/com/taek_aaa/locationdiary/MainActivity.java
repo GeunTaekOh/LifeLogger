@@ -14,6 +14,7 @@ import static com.taek_aaa.locationdiary.DataSet.moveCameraIter;
  * Created by taek_aaa on 2016. 11. 26..
  */
 
+/** 메인 부분  **/
 public class MainActivity extends Activity {
     private long lastTimeBackPressed;
 
