@@ -155,17 +155,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 }
                             })
-                            .setNegativeButton("사진 촬영", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("삭제", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent();
-                                    intent.setAction("android.media.action.IMAGE_CAPTURE");
-                                    startActivity(intent);
+                                    dbManager.delete(sllDBData.get(temp).curlatitude,sllDBData.get(temp).curlongitude);
+                                    Toast.makeText(MapsActivity.this, "정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
+                                    startActivity(moveToMap);
+                                    onMapReady(mMap);
+                                    finish();
                                 }
                             });
-
                     AlertDialog ad = adb.create();
-                   // tempad = ad;
                     ad.show();
                 }
 
@@ -196,6 +197,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         moveCameraIter++;
+    }
+
+
+    public void onClickPicture(View v){
+        Intent intent = new Intent();
+        intent.setAction("android.media.action.IMAGE_CAPTURE");
+        startActivity(intent);
     }
 
 }

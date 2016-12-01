@@ -131,4 +131,10 @@ public class DBManager extends SQLiteOpenHelper {
         return totaltime;
 
     }
+////////이부분 삭제하기
+    public void delete (Double latitude, Double longitude) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM database WHERE latitude = " + latitude + " AND longitude = " + longitude);
+        db.close();
+    }
 }
