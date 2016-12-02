@@ -201,7 +201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iter = dbManager.getIter();
 
 
-        if (moveCameraIter == iter) {
+        if (moveCameraIter == sllDBData.size()) {
             Toast.makeText(this, "마지막 궤적입니다.",Toast.LENGTH_SHORT).show();
             moveCameraBtn.setText("궤적보기");
             moveCameraIter = 0;
