@@ -86,13 +86,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         sllDBData.clear();
-        moveCameraIter = 0;
+        //dbManager.update();
         dbManager.getResult(sllDBData);
+        moveCameraIter = 0;
+
         mMap = googleMap;
         iter = dbManager.getIter();
-        try {
+
+       // try {
             Log.e("value", String.valueOf(itc.getIteration()));
-            for (int i = 0; i < iter; i++) {
+            for (int i = 0; i < sllDBData.size(); i++) {
                 Log.e("value", String.valueOf(sllDBData.get(i).curlatitude));
                 Log.e("value", String.valueOf(sllDBData.get(i).curlongitude));
                 Log.e("value", sllDBData.get(i).curTodoOrEvent);
@@ -104,7 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
 
-            for (int i = 0; i < iter; i++) {
+            for (int i = 0; i < sllDBData.size(); i++) {
                 MarkerOptions opt = new MarkerOptions();
                 opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
                 opt.title(sllDBData.get(i).curNum);
@@ -160,8 +163,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 public void onClick(DialogInterface dialog, int which) {
                                     dbManager.delete(sllDBData.get(temp).curlatitude,sllDBData.get(temp).curlongitude);
                                     Toast.makeText(MapsActivity.this, "정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                    Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
+                                    sllDBData.clear();
+                                    dbManager.idUpdate(temp);
+                                    dbManager.titleUpdate(temp);
+                                    dbManager.getResult(sllDBData);
+                                    Log.e("ogt","삭제후 총 iter : " + dbManager.getIter());
+                                    int qwe = dbManager.getIter();
+                                    for(int i=0; i<qwe; i++) {
+                                        Log.e("ogt", "curNum : " + sllDBData.get(i).curNum);
+                                        Log.e("ogt", "latitude : " + sllDBData.get(i).curlatitude);
+                                        Log.e("ogt", "longitude : " + sllDBData.get(i).curlongitude);
+                                    }
+                                   Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
                                     startActivity(moveToMap);
+
                                     onMapReady(mMap);
                                     finish();
                                 }
@@ -171,10 +186,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
             });
-        } catch (Exception e) {
+       /* } catch (Exception e) {
             e.getMessage();
+            Log.e("ogt",""+e);
             Toast.makeText(this, "먼저 값을 받아주세요.", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
     }
 
@@ -200,6 +216,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /** 사진 촬영 버튼 눌렀을 때 **/
     public void onClickPicture(View v){
         Intent intent = new Intent();
         intent.setAction("android.media.action.IMAGE_CAPTURE");

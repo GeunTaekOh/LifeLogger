@@ -22,5 +22,6 @@ public class DataSet {
     public static LinkedList<DBData> sllDBData = new LinkedList<DBData>();
     public static IterationClass itc = new IterationClass();
     public static int moveCameraIter=0;
+    public static Boolean isUpdate=false;
 
 }

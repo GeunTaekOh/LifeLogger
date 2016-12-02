@@ -8,7 +8,11 @@ import android.util.Log;
 
 import java.util.LinkedList;
 
-/**  DB를 관리해주는 클래스  **/
+import static com.taek_aaa.locationdiary.DataSet.isUpdate;
+
+/**
+ * DB를 관리해주는 클래스
+ **/
 
 public class DBManager extends SQLiteOpenHelper {
 
@@ -22,21 +26,27 @@ public class DBManager extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE database (_id INTEGER PRIMARY KEY AUTOINCREMENT, latitude REAL , longitude REAL, TodoOrEvent TEXT, category INTEGER, HowLong INTEGER, num TEXT, text TEXT, time TEXT);");
     }
 
-    /** DB버전을 높여서 DB삭제하는 효과를 줌  **/
+    /**
+     * DB버전을 높여서 DB삭제하는 효과를 줌
+     **/
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists database;");
         onCreate(db);
     }
 
-    /** DB에 데이터를 저장  **/
+    /**
+     * DB에 데이터를 저장
+     **/
     public void insert(double latitude, double longitude, String todoOrEvent, int category, int howLong, int num, String text, String time) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("INSERT INTO database VALUES(NULL, " + latitude + ", " + longitude + ", '" + todoOrEvent + "', " + category + ", " + howLong + ", " + num + ", '" + text + "', '" + time + "');");  //string넣을때는 '' 하고그안에""해야
         db.close();
     }
 
-    /** DB에 값을 LinkedList로 꺼냄 **/
+    /**
+     * DB에 값을 LinkedList로 꺼냄
+     **/
     public void getResult(LinkedList<DBData> sllDBData) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -69,6 +79,7 @@ public class DBManager extends SQLiteOpenHelper {
             dbdata.curNum = numcur;
             dbdata.curText = textcur;
             dbdata.curTime = timecur;
+
             Log.i("tttt", String.valueOf(dbdata.curlatitude));
             Log.i("tttt", String.valueOf(dbdata.curlongitude));
             Log.i("tttt", dbdata.curTodoOrEvent);
@@ -84,25 +95,35 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    /**  DB의 맨 마지막 _id를 가져오는 매서드  **/
+    /**
+     * DB의 맨 마지막 _id를 가져오는 매서드
+     **/
     public int getIter() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
         int tempdbiter = 0;
         while (cursor.moveToNext()) {
+            //tempdbiter = cursor.getInt(cursor.getColumnIndex("_id"));
             tempdbiter = cursor.getInt(cursor.getColumnIndex("_id"));
             Log.e("qwe", String.valueOf(tempdbiter));
         }
-        return tempdbiter;
+        if(isUpdate==false) {
+            return tempdbiter;
+        }else{
+            isUpdate=false;
+            return --tempdbiter;
+        }
     }
 
-    /** 전달받은 시작날짜 종료날짜 사이의 카테고리에 해당하는 총 걸린시간을 더한 값을 return 해주는 메서드  **/
+    /**
+     * 전달받은 시작날짜 종료날짜 사이의 카테고리에 해당하는 총 걸린시간을 더한 값을 return 해주는 메서드
+     **/
     public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
         int max = 1231;
-        if((startYearMonthDate > max)|| (endYearMonthDate > max)){
-            Log.e("error","날짜 전달값이 잘못되었습니다.");
+        if ((startYearMonthDate > max) || (endYearMonthDate > max)) {
+            Log.e("error", "날짜 전달값이 잘못되었습니다.");
         }
 
         int totaltime = 0;
@@ -131,10 +152,84 @@ public class DBManager extends SQLiteOpenHelper {
         return totaltime;
 
     }
-////////이부분 삭제하기
-    public void delete (Double latitude, Double longitude) {
+
+    /**
+     * DB 선택한 부분의 마커 삭제
+     **/
+    public void delete(Double latitude, Double longitude) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM database WHERE latitude = " + latitude + " AND longitude = " + longitude);
+
         db.close();
     }
+
+    public void idUpdate(int deleteIndex) {
+/*        *//**//*SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        int count =cursor.getCount();
+        for(int i=0; i<count; i++){
+            db.execSQL( "UPDATE database SET _id = " + (deleteIndex + i) + " WHERE _id = " + (deleteIndex + i + 1)+";");
+        }
+        cursor.close();*//**//**/
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        String sDeleteIndex = String.valueOf(deleteIndex);
+
+        String sql =  "UPDATE database SET _id=_id-1 WHERE _id>"+sDeleteIndex;
+        db.execSQL(sql);
+        cursor.close();
+        //--iter;                                         /**이부분이 의미없음 getiter로 다시 가져오니까 이걸 다른곳에서 구현해야함.*/
+        isUpdate = true;
+      /*  *//**//*int last = getIter() ;
+        Log.e("ogt","업데이트들어옴");
+        Log.e("ogt","last = "+last);
+        Log.e("ogt","getiter : "+getIter());
+        for(int i=deleteIndex; i<last-1; i++){
+            db.execSQL("update database SET _id=" + i + " WHERE _id = "+(i+1) + ";");
+            Log.e("ogt", ""+last);
+        }
+        isUpdate=true;*//**//*
+*/
+
+    }
+   /* public void idUpdate() {
+
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        while (cursor.moveToNext()) {
+            int tableNum = 1;
+            String sql = "UPDATE database SET _id=" + tableNum + "WHERE _id";
+            db.execSQL(sql);
+            tableNum++;
+        }
+
+        cursor.close();
+        iter--;
+        *//*int last = getIter() ;
+        Log.e("ogt","업데이트들어옴");
+        Log.e("ogt","last = "+last);
+        Log.e("ogt","getiter : "+getIter());
+        for(int i=deleteIndex; i<last-1; i++){
+            db.execSQL("update database SET _id=" + i + " WHERE _id = "+(i+1) + ";");
+            Log.e("ogt", ""+last);
+        }
+        isUpdate=true;*//*
+
+
+    }*/
+
+    public void titleUpdate(int deleteIndex) {
+        //타이틀 2번을 삭제했으면
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
+        String sDeleteIndex = String.valueOf(deleteIndex);
+
+        String sql = "UPDATE database SET num=num-1 WHERE num>" + sDeleteIndex;
+        db.execSQL(sql);
+        cursor.close();
+
+    }
 }
+//궤도 다음부분누르면 2개있어도 1개로만움직여짐

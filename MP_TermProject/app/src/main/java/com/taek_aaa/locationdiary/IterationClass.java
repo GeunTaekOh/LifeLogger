@@ -26,4 +26,9 @@ public class IterationClass {
         it = it + n;
         return it;
     }
+
+    public int sub(int n){
+        it = it - n;
+        return it;
+    }
 }
