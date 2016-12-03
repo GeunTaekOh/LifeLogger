@@ -93,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         iter = dbManager.getIter();
 
-       // try {
+       try {
             Log.e("value", String.valueOf(itc.getIteration()));
             for (int i = 0; i < sllDBData.size(); i++) {
                 Log.e("value", String.valueOf(sllDBData.get(i).curlatitude));
@@ -168,15 +168,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     dbManager.titleUpdate(temp);
                                     dbManager.getResult(sllDBData);
                                     Log.e("ogt","삭제후 총 iter : " + dbManager.getIter());
-                                    int qwe = dbManager.getIter();
-                                    for(int i=0; i<qwe; i++) {
-                                        Log.e("ogt", "curNum : " + sllDBData.get(i).curNum);
-                                        Log.e("ogt", "latitude : " + sllDBData.get(i).curlatitude);
-                                        Log.e("ogt", "longitude : " + sllDBData.get(i).curlongitude);
-                                    }
                                    Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
                                     startActivity(moveToMap);
-
+                                    for(int i=0; i<sllDBData.size();i++){
+                                        sllDBData.get(i).curNum=""+i;
+                                    }
                                     onMapReady(mMap);
                                     finish();
                                 }
@@ -186,11 +182,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
             });
-       /* } catch (Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             Log.e("ogt",""+e);
             Toast.makeText(this, "먼저 값을 받아주세요.", Toast.LENGTH_SHORT).show();
-        }*/
+        }
 
     }
 
