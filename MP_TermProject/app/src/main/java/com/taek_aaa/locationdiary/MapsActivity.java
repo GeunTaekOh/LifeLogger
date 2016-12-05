@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -43,10 +45,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static int temp;
     Bitmap photo;
     final int PICK_FROM_ALBUM = 101;
-    //AlertDialog tempad;
+    AlertDialog tempad;
     Dialog dialog;
     ImageView imageView;
     Button moveCameraBtn;
+    CircleOptions circle;
+    String photo_str;
+    ViewGroup.LayoutParams layoutParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case PICK_FROM_ALBUM:
-                Uri uri = data.getData();
                 try {
+                    Uri uri = data.getData();
                     photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                     dialog = new Dialog(this);
                     dialog.setOwnerActivity(this);
@@ -75,6 +80,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     imageView.setImageBitmap(photo);
 ////이부분수정 사진불러오기
                     dialog.show();
+/*
+
+                    uri= data.getData();
+                    photo_str = uri.toString();
+                    MediaStore.Images.Media.getBitmap( getContentResolver(), uri);
+                    imageView.setImageURI(uri);
+*/
+
 
 
                 } catch (Exception e) {
@@ -88,6 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sllDBData.clear();
         //dbManager.update();
         dbManager.getResult(sllDBData);
+        Log.e("slldbdata의 크기",""+sllDBData.size());
         moveCameraIter = 0;
 
         mMap = googleMap;
@@ -105,15 +119,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.e("value", sllDBData.get(i).curText);
                 Log.e("value", sllDBData.get(i).curTime);
             }
-
+           for(int i=0; i<sllDBData.size();i++){
+               sllDBData.get(i).curNum=""+i;
+           }
 
             for (int i = 0; i < sllDBData.size(); i++) {
                 MarkerOptions opt = new MarkerOptions();
                 opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
                 opt.title(sllDBData.get(i).curNum);
                 opt.snippet(sllDBData.get(i).curText + "@" + sllDBData.get(i).curTime);
+                if(sllDBData.get(i).curTodoOrEvent.equals("Event")){
+                     circle = new CircleOptions().center(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)) //원점
+                            .radius(10)      //반지름 단위 : m
+                            .strokeWidth(0f)  //선너비 0f : 선없음
+                            .fillColor(Color.parseColor("#880000ff"));
+
+
+                }else {
+                    circle = new CircleOptions().center(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)) //원점
+                            .radius(0)
+                            .strokeWidth(0f);
+                }
 
                 mMap.addMarker(opt).showInfoWindow();
+                mMap.addCircle(circle);
                 if (i != 0) {
                     mMap.addPolyline(new PolylineOptions().geodesic(true).add(new LatLng(Double.valueOf(sllDBData.get(i - 1).curlatitude), Double.valueOf(sllDBData.get(i - 1).curlongitude)), new LatLng(Double.valueOf(sllDBData.get(i).curlatitude), Double.valueOf(sllDBData.get(i).curlongitude))).width(5).color(Color.RED));
                 }
@@ -128,8 +157,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
                     type_ll = new LinearLayout(MapsActivity.this);
                     type_ll.setPadding(0, 0, 0, 0);
+
                     int a = Integer.valueOf(marker.getTitle());
                     ConvertSecondtoTime cst = new ConvertSecondtoTime();
+                    Log.e("현재 클릭한 마커의 제목의 타이틀",""+a);
                     cst.transferTime(sllDBData.get(a).curHowLong);
                     String h = cst.getHour();
                     String m = cst.getMinute();
@@ -178,6 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
                             });
                     AlertDialog ad = adb.create();
+                    tempad = ad;
                     ad.show();
                 }
 

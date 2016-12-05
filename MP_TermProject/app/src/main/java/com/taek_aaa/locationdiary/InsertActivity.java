@@ -42,7 +42,9 @@ import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
 import static com.taek_aaa.locationdiary.R.id.spinner;
 import static java.lang.System.exit;
 
-/**  정보 입력하기 부분  **/
+/**
+ * 정보 입력하기 부분
+ **/
 public class InsertActivity extends Activity {
 
     MyLocationListener mll = null;
@@ -89,12 +91,16 @@ public class InsertActivity extends Activity {
         });
     }
 
-    /** 현재 위치 검색 버튼을 눌렀을 때 **/
+    /**
+     * 현재 위치 검색 버튼을 눌렀을 때
+     **/
     public void onClickCurrentLocation(View v) {
         getLocation();
     }
 
-    /**  현재 위치를 받는 메서드 **/
+    /**
+     * 현재 위치를 받는 메서드
+     **/
     public void getLocation() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mll = new MyLocationListener();
@@ -133,7 +139,9 @@ public class InsertActivity extends Activity {
         }
     }
 
-    /** GPS에 대한 리스너 **/
+    /**
+     * GPS에 대한 리스너
+     **/
     public class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
@@ -180,24 +188,41 @@ public class InsertActivity extends Activity {
         }
     }
 
-    /**  타이머 START 버튼  **/
+    /**
+     * 타이머 START 버튼
+     **/
     public void onClickTimerStartbtn(View v) {
         Button startbtn = (Button) findViewById(R.id.timerStartbtn);
         final TextView timerTv = (TextView) findViewById(R.id.timerTextView);
-        if (t == 1) {
-            startbtn.setText("Pause");
-            starttime = SystemClock.uptimeMillis();
-            handler.postDelayed(updateTimer, 0);
-            t = 0;
-        } else {
-            startbtn.setText("Start");
-            timerTv.setTextColor(Color.BLUE);
-            timeSwapBuff += timeInMilliseconds;
-            handler.removeCallbacks(updateTimer);
-            t = 1;
+        try {
+            if (stoDoOrEvent.equals("To Do")) {
+                if (t == 1) {
+                    startbtn.setText("Pause");
+                    starttime = SystemClock.uptimeMillis();
+                    handler.postDelayed(updateTimer, 0);
+                    t = 0;
+                } else {
+                    startbtn.setText("Start");
+                    timerTv.setTextColor(Color.BLUE);
+                    timeSwapBuff += timeInMilliseconds;
+                    handler.removeCallbacks(updateTimer);
+                    t = 1;
+                }
+            } else if (stoDoOrEvent.equals("Event")) {
+                //startbtn.setText("");
+                //startbtn.setEnabled(false);
+                Log.e("event", "이벤트로 인식함");
+                startbtn.setVisibility(View.INVISIBLE);
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "확인 버튼을 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
-    /**  타이머 END 버튼**/
+
+    /**
+     * 타이머 END 버튼
+     **/
     public void onClickTimerEndbtn(View v) {
         String howlongtime;
         String shour;
@@ -234,6 +259,7 @@ public class InsertActivity extends Activity {
         hours = 0;
         handler.removeCallbacks(updateTimer);
         stopWatchtv.setText("00:00:00");
+        startbtn.setVisibility(View.VISIBLE);
         startbtn.setText("Start");
         t = 1;
         Log.i("test", "찍힘");
@@ -269,7 +295,9 @@ public class InsertActivity extends Activity {
 
     }
 
-    /** 타이머를 관리하는 쓰레드  **/
+    /**
+     * 타이머를 관리하는 쓰레드
+     **/
     public Runnable updateTimer = new Runnable() {
         public void run() {
             final TextView timerTv = (TextView) findViewById(R.id.timerTextView);
@@ -284,7 +312,9 @@ public class InsertActivity extends Activity {
         }
     };
 
-    /**  확인 버튼을 눌렀을 때 라디오 버튼의 값을 가져옴 **/
+    /**
+     * 확인 버튼을 눌렀을 때 라디오 버튼의 값을 가져옴
+     **/
     public void listenerOnBtn() {
         radioGroup = (RadioGroup) findViewById(R.id.radiobtnGroup);
         checkBoxTodo = (RadioButton) findViewById(R.id.checkToDo);
@@ -303,7 +333,9 @@ public class InsertActivity extends Activity {
         });
     }
 
-    /** DB삭제 버튼을 눌렀을 때 **/
+    /**
+     * DB삭제 버튼을 눌렀을 때
+     **/
     public void onClickClearDB(View v) {     //디비삭제
         db = dbManager.getWritableDatabase();
         AlertDialog.Builder adb = new AlertDialog.Builder(InsertActivity.this);

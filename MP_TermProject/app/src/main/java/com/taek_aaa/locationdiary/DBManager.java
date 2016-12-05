@@ -16,6 +16,8 @@ import static com.taek_aaa.locationdiary.DataSet.isUpdate;
 
 public class DBManager extends SQLiteOpenHelper {
 
+     int temptitlenum;
+
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -222,13 +224,19 @@ public class DBManager extends SQLiteOpenHelper {
 
     public void titleUpdate(int deleteIndex) {
         //타이틀 2번을 삭제했으면
+
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
         String sDeleteIndex = String.valueOf(deleteIndex);
 
-        String sql = "UPDATE database SET num=num-1 WHERE num>" + sDeleteIndex;
-        db.execSQL(sql);
+        while (cursor.moveToNext()) {
+            String sql = "UPDATE database SET num=num-1 WHERE num>" + sDeleteIndex;
+            db.execSQL(sql);
+        }
         cursor.close();
+
+
+
 
     }
 }
