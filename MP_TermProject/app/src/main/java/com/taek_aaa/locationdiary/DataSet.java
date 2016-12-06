@@ -23,5 +23,6 @@ public class DataSet {
     public static IterationClass itc = new IterationClass();
     public static int moveCameraIter=0;
     public static Boolean isUpdate=false;
+    public static int categoty_arr_index2;
 
 }
