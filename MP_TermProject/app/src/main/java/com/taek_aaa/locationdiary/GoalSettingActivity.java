@@ -62,11 +62,12 @@ public class GoalSettingActivity extends Activity {
         strContents = editTextContents.getText().toString();        //editText값 내용
         strHowlong = editHowlongtime.getText().toString();          //editText값 몇시간
 
+        /** Spinner 선택 하는 부분 **/
         Spinner spinner = (Spinner) findViewById(R.id.spinnerGoalSetting);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                categoty_arr_index2 = position;
+                categoty_arr_index2 = position;         //목표에서 뽑은 카테고리
             }
 
             @Override
@@ -97,6 +98,7 @@ public class GoalSettingActivity extends Activity {
     }*/
 
 
+    /** 목표 설정에서 시작 날짜 **/
     public void onclickStartGoal(View v){
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 
@@ -117,6 +119,7 @@ public class GoalSettingActivity extends Activity {
         };
         new DatePickerDialog(this, dateSetListener, iYears, iMonths, iDates).show();
     }
+    /** 목표 설정에서 끝 날짜 **/
     public void onclickEndGoal(View v){
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 

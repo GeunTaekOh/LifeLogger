@@ -62,7 +62,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
     }
 
     /**  사진 추가 버튼을 눌러서 intent의 결과를 받는 부분 **/
@@ -252,3 +251,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 }
+
+

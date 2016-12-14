@@ -13,12 +13,6 @@ public class ConvertSecondtoTime {
 
     public void transferTime(int totalSecond) {
         hour = String.valueOf(totalSecond / (60 * 60));
-        /*if (totalSecond / (60 * 60) == 0) {
-
-        } else {
-            totalSecond -= totalSecond / (60 * 60);
-        }
-        */
         if(totalSecond / (60*60) != 0){
             totalSecond -= totalSecond / (60 * 60);
         }

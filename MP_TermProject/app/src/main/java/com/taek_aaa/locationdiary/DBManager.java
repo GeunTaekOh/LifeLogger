@@ -166,13 +166,6 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public void idUpdate(int deleteIndex) {
-/*        *//**//*SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-        int count =cursor.getCount();
-        for(int i=0; i<count; i++){
-            db.execSQL( "UPDATE database SET _id = " + (deleteIndex + i) + " WHERE _id = " + (deleteIndex + i + 1)+";");
-        }
-        cursor.close();*//**//**/
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -183,48 +176,11 @@ public class DBManager extends SQLiteOpenHelper {
         cursor.close();
         //--iter;                                         /**이부분이 의미없음 getiter로 다시 가져오니까 이걸 다른곳에서 구현해야함.*/
         isUpdate = true;
-      /*  *//**//*int last = getIter() ;
-        Log.e("ogt","업데이트들어옴");
-        Log.e("ogt","last = "+last);
-        Log.e("ogt","getiter : "+getIter());
-        for(int i=deleteIndex; i<last-1; i++){
-            db.execSQL("update database SET _id=" + i + " WHERE _id = "+(i+1) + ";");
-            Log.e("ogt", ""+last);
-        }
-        isUpdate=true;*//**//*
-*/
 
     }
-   /* public void idUpdate() {
-
-
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM database", null);
-        while (cursor.moveToNext()) {
-            int tableNum = 1;
-            String sql = "UPDATE database SET _id=" + tableNum + "WHERE _id";
-            db.execSQL(sql);
-            tableNum++;
-        }
-
-        cursor.close();
-        iter--;
-        *//*int last = getIter() ;
-        Log.e("ogt","업데이트들어옴");
-        Log.e("ogt","last = "+last);
-        Log.e("ogt","getiter : "+getIter());
-        for(int i=deleteIndex; i<last-1; i++){
-            db.execSQL("update database SET _id=" + i + " WHERE _id = "+(i+1) + ";");
-            Log.e("ogt", ""+last);
-        }
-        isUpdate=true;*//*
-
-
-    }*/
 
     public void titleUpdate(int deleteIndex) {
         //타이틀 2번을 삭제했으면
-
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
         String sDeleteIndex = String.valueOf(deleteIndex);
@@ -234,10 +190,6 @@ public class DBManager extends SQLiteOpenHelper {
             db.execSQL(sql);
         }
         cursor.close();
-
-
-
-
     }
 }
 //궤도 다음부분누르면 2개있어도 1개로만움직여짐
