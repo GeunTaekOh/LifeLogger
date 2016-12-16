@@ -13,17 +13,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
+import static com.taek_aaa.locationdiary.DataSet.biggerOrSmaller;
 import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index2;
-import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
+import static com.taek_aaa.locationdiary.DataSet.goalEndDate;
+import static com.taek_aaa.locationdiary.DataSet.goalEndMonth;
+import static com.taek_aaa.locationdiary.DataSet.goalEndYear;
+import static com.taek_aaa.locationdiary.DataSet.goalStartDate;
+import static com.taek_aaa.locationdiary.DataSet.goalStartMonth;
+import static com.taek_aaa.locationdiary.DataSet.goalStartYear;
+import static com.taek_aaa.locationdiary.DataSet.goalString;
+import static com.taek_aaa.locationdiary.DataSet.goalTime;
 
 /**
  * Created by taek_aaa on 2016. 11. 29..
  */
 
-/** 목표 설정 눌렀을 때 **/
+/**
+ * 목표 설정 눌렀을 때
+ **/
 public class GoalSettingActivity extends Activity {
     EditText editTextContents, editHowlongtime;
     TextView startDay;
@@ -41,10 +52,10 @@ public class GoalSettingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goalsetting);
-        editTextContents = (EditText)findViewById(R.id.goalEditText);
-        startDay = (TextView)findViewById(R.id.goalStartDate);
-        endDay = (TextView)findViewById(R.id.goalEndDate);
-        editHowlongtime = (EditText)findViewById(R.id.goalHowTimeEditText);
+        editTextContents = (EditText) findViewById(R.id.goalEditText);
+        startDay = (TextView) findViewById(R.id.goalStartDate);
+        endDay = (TextView) findViewById(R.id.goalEndDate);
+        editHowlongtime = (EditText) findViewById(R.id.goalHowTimeEditText);
 
         Calendar today;
         today = Calendar.getInstance();
@@ -59,7 +70,7 @@ public class GoalSettingActivity extends Activity {
 
         startDay.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         endDay.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
-        
+
 
         strContents = editTextContents.getText().toString();        //editText값 내용
         strHowlong = editHowlongtime.getText().toString();          //editText값 몇시간
@@ -80,8 +91,10 @@ public class GoalSettingActivity extends Activity {
 
     }
 
-
-   public void listenerOnRadioBtn() {
+    /**
+     * 라디오 어떤 값을 가져왔는지를 확인
+     **/
+    public void listenerOnRadioBtn() {
         radioGroup = (RadioGroup) findViewById(R.id.goalRadioGroup);
         radioButton1 = (RadioButton) findViewById(R.id.goalRadio1);
         radioButton2 = (RadioButton) findViewById(R.id.goalRadio2);
@@ -91,17 +104,18 @@ public class GoalSettingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 int selected = radioGroup.getCheckedRadioButtonId();
-                Log.e("ppq", String.valueOf(selected));
                 selectedbtn = (RadioButton) findViewById(selected);
                 Log.e("ppq", selectedbtn.getText().toString());
-                stoDoOrEvent = selectedbtn.getText().toString();
+                biggerOrSmaller = selectedbtn.getText().toString();
             }
         });
     }
 
 
-    /** 목표 설정에서 시작 날짜 **/
-    public void onclickStartGoal(View v){
+    /**
+     * 목표 설정에서 시작 날짜
+     **/
+    public void onclickStartGoal(View v) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 
 
@@ -115,14 +129,20 @@ public class GoalSettingActivity extends Activity {
                 iYears = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
                 iMonths = monthOfYear;
                 iDates = dayOfMonth;
+                goalStartYear = year;
+                goalStartMonth = hMonths;
+                goalStartDate = dayOfMonth;
 
 
             }
         };
         new DatePickerDialog(this, dateSetListener, iYears, iMonths, iDates).show();
     }
-    /** 목표 설정에서 끝 날짜 **/
-    public void onclickEndGoal(View v){
+
+    /**
+     * 목표 설정에서 끝 날짜
+     **/
+    public void onclickEndGoal(View v) {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() { //datepicker
 
 
@@ -136,10 +156,32 @@ public class GoalSettingActivity extends Activity {
                 iYeare = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
                 iMonthe = monthOfYear;
                 iDatee = dayOfMonth;
-
+                goalEndYear = year;
+                goalEndMonth = hMonthe;
+                goalEndDate = dayOfMonth;
             }
         };
         new DatePickerDialog(this, dateSetListener, iYeare, iMonthe, iDatee).show();
+
+    }
+
+    public void onClickGoalSet(View v) {
+        editTextContents = (EditText) findViewById(R.id.goalEditText);
+        editHowlongtime = (EditText) findViewById(R.id.goalHowTimeEditText);
+        strContents = editTextContents.getText().toString();
+        strHowlong = editHowlongtime.getText().toString();
+
+        if (strContents == null || strHowlong == null) {
+            Toast.makeText(getBaseContext(), "값을 모두 입력하세요.", Toast.LENGTH_SHORT).show();
+        } else {
+            goalString = strContents;
+            goalTime = strHowlong;
+        }
+        editTextContents.setText("");
+        editHowlongtime.setText("");
+
+
+        Toast.makeText(getBaseContext(), "목표를 설정하였습니다.", Toast.LENGTH_SHORT).show();
 
     }
 

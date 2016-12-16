@@ -12,6 +12,7 @@ public class DataSet {
     public static double latitudeDouble;
     public static double longitudeDouble;
     public static String stoDoOrEvent;
+    public static String biggerOrSmaller;
     public static int categoty_arr_index;
     public static int mainCategory_arr_index;
     public static int subCategory_arr_index;
@@ -25,5 +26,13 @@ public class DataSet {
     public static Boolean isUpdate=false;
     public static int categoty_arr_index2;
     public static String goalString="";
+    public static int goalStartYear;
+    public static int goalStartMonth;
+    public static int goalStartDate;
+    public static int goalEndYear;
+    public static int goalEndMonth;
+    public static int goalEndDate;
+    public static String goalTime = "";
+
 
 }
