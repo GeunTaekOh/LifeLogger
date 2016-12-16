@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,11 +48,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final int PICK_FROM_ALBUM = 101;
     AlertDialog tempad;
     Dialog dialog;
-    ImageView imageView;
+    public static ImageView imageView;
     Button moveCameraBtn;
     CircleOptions circle;
     String photo_str;
     ViewGroup.LayoutParams layoutParams;
+    public static LayoutInflater inflater;
+    public  View dialogView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,22 +75,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     Uri uri = data.getData();
                     photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    dialog = new Dialog(this);
-                    dialog.setOwnerActivity(this);
-                    dialog.setContentView(R.layout.activity_dialog);
-                    imageView = (ImageView) dialog.findViewById(R.id.imageview);
+                    inflater=getLayoutInflater();
+                    dialogView= inflater.inflate(R.layout.activity_dialog, null);
+                    imageView = (ImageView) dialogView.findViewById(R.id.imageview);
                     imageView.setImageBitmap(photo);
-////이부분수정 사진불러오기
-                    dialog.show();
-/*
 
-                    uri= data.getData();
-                    photo_str = uri.toString();
-                    MediaStore.Images.Media.getBitmap( getContentResolver(), uri);
-                    imageView.setImageURI(uri);
-*/
-
-
+                    Toast.makeText(getBaseContext(),"사진을 저장하였습니다.",Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
                     e.getStackTrace();
@@ -154,8 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(MapsActivity.this);
-                    type_ll = new LinearLayout(MapsActivity.this);
-                    type_ll.setPadding(0, 0, 0, 0);
+
 
                     int a = Integer.valueOf(marker.getTitle());
                     ConvertSecondtoTime cst = new ConvertSecondtoTime();
@@ -170,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .setTitle("정보창")
                             .setCancelable(false)
                             .setMessage("종류 : " + sllDBData.get(a).curTodoOrEvent + "\n" + "카테고리 : " + category_arr[sllDBData.get(a).curCategory] + "\n" + "소요시간 : " + h + "시간 " + m + "분 " + s + "초" + "\n" + "" + "내용 : " + sllDBData.get(a).curText + "\n" + "시간 : " + sllDBData.get(a).curTime)
-                            .setView(type_ll)
+                            .setView(dialogView)
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -198,7 +190,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     dbManager.titleUpdate(temp);
                                     dbManager.getResult(sllDBData);
                                     Log.e("ogt","삭제후 총 iter : " + dbManager.getIter());
-                                   Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
+                                    Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
                                     startActivity(moveToMap);
                                     for(int i=0; i<sllDBData.size();i++){
                                         sllDBData.get(i).curNum=""+i;
@@ -209,7 +201,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             });
                     AlertDialog ad = adb.create();
                     tempad = ad;
+
                     ad.show();
+                    dialogView = null;
+
                 }
 
             });
@@ -237,6 +232,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             moveCameraBtn.setText("다음");
             mMap.moveCamera(newLatLng(new LatLng(sllDBData.get(moveCameraIter).curlatitude, sllDBData.get(moveCameraIter).curlongitude)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2500, null);
+
         }
 
         moveCameraIter++;
