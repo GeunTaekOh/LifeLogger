@@ -3,6 +3,7 @@ package com.taek_aaa.locationdiary;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import static com.taek_aaa.locationdiary.DataSet.categoty_arr_index2;
+import static com.taek_aaa.locationdiary.DataSet.stoDoOrEvent;
 
 /**
  * Created by taek_aaa on 2016. 11. 29..
@@ -29,6 +31,7 @@ public class GoalSettingActivity extends Activity {
     RadioGroup radioGroup;
     RadioButton radioButton1;
     RadioButton radioButton2;
+    RadioButton selectedbtn;
     Button setButton;
     String strContents, strHowlong;
     int iYears, iDates, iMonths, hMonths;
@@ -56,12 +59,11 @@ public class GoalSettingActivity extends Activity {
 
         startDay.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         endDay.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
-
-//        listenerOnRadioBtn();
+        
 
         strContents = editTextContents.getText().toString();        //editText값 내용
         strHowlong = editHowlongtime.getText().toString();          //editText값 몇시간
-
+        listenerOnRadioBtn();
         /** Spinner 선택 하는 부분 **/
         Spinner spinner = (Spinner) findViewById(R.id.spinnerGoalSetting);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -79,23 +81,23 @@ public class GoalSettingActivity extends Activity {
     }
 
 
-   /* public void listenerOnRadioBtn() {
-        radioGroup = (RadioGroup) findViewById(R.id.radiobtnGroup);
-        radioButton1 = (RadioButton) findViewById(R.id.checkToDo);
-        radioButton2 = (RadioButton) findViewById(R.id.checkEvent);
-        setButton = (Button) findViewById(R.id.confirmbtn);
+   public void listenerOnRadioBtn() {
+        radioGroup = (RadioGroup) findViewById(R.id.goalRadioGroup);
+        radioButton1 = (RadioButton) findViewById(R.id.goalRadio1);
+        radioButton2 = (RadioButton) findViewById(R.id.goalRadio2);
+        setButton = (Button) findViewById(R.id.saveRadiobuttonGoalSetting);
 
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                *//*int selected = radioGroup.getCheckedRadioButtonId();
-                Log.i("test", String.valueOf(selected));
+                int selected = radioGroup.getCheckedRadioButtonId();
+                Log.e("ppq", String.valueOf(selected));
                 selectedbtn = (RadioButton) findViewById(selected);
-                Log.i("test", selectedbtn.getText().toString());
-                stoDoOrEvent = selectedbtn.getText().toString();*//*
+                Log.e("ppq", selectedbtn.getText().toString());
+                stoDoOrEvent = selectedbtn.getText().toString();
             }
         });
-    }*/
+    }
 
 
     /** 목표 설정에서 시작 날짜 **/

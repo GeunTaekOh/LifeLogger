@@ -240,6 +240,7 @@ public class InsertActivity extends Activity {
         ihowlongtime = Integer.valueOf(shour) * 60 * 60 + Integer.valueOf(sminute) * 60 + Integer.valueOf(sseconds);
 
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/hh:mm");
+        Log.e("ppq",""+df);
         Date clsTime = new Date();
         String resulttime = df.format(clsTime);
 
