@@ -209,8 +209,6 @@ public class InsertActivity extends Activity {
                     t = 1;
                 }
             } else if (stoDoOrEvent.equals("Event")) {
-                //startbtn.setText("");
-                //startbtn.setEnabled(false);
                 Log.e("event", "이벤트로 인식함");
                 startbtn.setVisibility(View.INVISIBLE);
 

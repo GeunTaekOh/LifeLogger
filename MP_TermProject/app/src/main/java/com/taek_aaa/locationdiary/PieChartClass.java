@@ -21,20 +21,15 @@ public class PieChartClass extends Activity{
 
     DBManager dbManager = new DBManager(getBaseContext(), "logger.db", null, 1);
     PieChart pieChart ;
-
     /** 그래프에 표시할 항목에 대한 변수 **/
     int[] yData = new int[7] ;
-
     /** 그래프에 표현할 카테고리 이름 **/
     String[] categoryName = {"공부", "식사", "카페", "이동","수업","친구","휴식"} ;
-
     /** 클래스 선언 시 생성자 **/
     PieChartClass(PieChart pieChart) {
         pieChart.setUsePercentValues(true) ;
         pieChart.setRotationAngle(0) ;
         pieChart.setRotationEnabled(true) ;
-
-
         this.pieChart = pieChart ;
     }
 

@@ -34,7 +34,7 @@ public class List extends Activity {
     int iDatee;
     int hMonthe;  //h가 붙은 것들은 사람이 아는 값
     final static int CATEGORY_SEQ = 1001;
-    final static int TIME_SEQ = 1002;
+    final static int TOTAL_SEQ = 1002;
     int state;
     int nullData;
     TextView showre;
@@ -83,7 +83,7 @@ public class List extends Activity {
                     case (1):
                         populateSubSpinners(R.array.subSpinnerContentsTime);
                         showre.setText("<Pie Chart>");
-                        state = TIME_SEQ;
+                        state = TOTAL_SEQ;
                         break;
                 }
             }
@@ -163,7 +163,6 @@ public class List extends Activity {
             Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
             showre.setText("");
         }
-
         if (state == CATEGORY_SEQ) {
             int showTotalResult = dbManager.staticslist(parstart, parend, subCategory_arr_index);
             ConvertSecondtoTime cst = new ConvertSecondtoTime();
@@ -171,27 +170,21 @@ public class List extends Activity {
             String h = cst.getHour();
             String m = cst.getMinute();
             String s = cst.getSecond();
-
             showre.setText("" + category_arr[subCategory_arr_index] + "에 소요한 총 시간은 " + "" + h + "시간 " + m + "분 " + s + "초 입니다.");
-        } else if (state == TIME_SEQ) {
+        } else if (state == TOTAL_SEQ) {
             pieChart = (PieChart) findViewById(R.id.pie_Chart) ;
             Description desc = new Description();
             desc.setText("Category Stats");
             pieChart.setDescription(desc);
-
             for(int i=0; i<numForGraph.length; i++){
                 numForGraph[i] = dbManager.staticslist(parstart,parend,i);
             }
-
-
             for(int i=0; i<numForGraph.length; i++){
                 nullData+=numForGraph[i];
             }
-
             if(nullData==0){
                 Toast.makeText(this,"해당 날짜에 데이터가 없습니다.",Toast.LENGTH_SHORT).show();
             }
-
             mypieChart = new PieChartClass(pieChart) ;
             mypieChart.setyData(numForGraph);
             mypieChart.addData();

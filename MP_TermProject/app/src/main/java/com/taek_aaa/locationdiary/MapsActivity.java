@@ -76,7 +76,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     dialogView = inflater.inflate(R.layout.activity_dialog, null);
                     imageView = (ImageView) dialogView.findViewById(R.id.imageview);
                     imageView.setImageBitmap(photo);
-
                     Toast.makeText(getBaseContext(), "사진을 저장하였습니다.", Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
