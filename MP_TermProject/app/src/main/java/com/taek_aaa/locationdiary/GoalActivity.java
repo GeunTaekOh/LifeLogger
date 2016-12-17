@@ -112,13 +112,13 @@ public class GoalActivity extends Activity {
             Log.e("plm", "" + todayMonth);
             Log.e("plm", "" + goalEndMonth);
             int showTotalResult = dbManager.staticslist(parstart, parend, categoty_arr_index2);
-
+            int goalTimeSecond = Integer.parseInt(goalTime) * 60 * 60;
             if (parend > parToday) {
                 status = DOING_GOAL;
                 Log.e("plm", "하는중");
             } else {
                 if (biggerOrSmaller.equals("이상")) {
-                    if (Integer.parseInt(goalTime) <= showTotalResult) {
+                    if (goalTimeSecond <= showTotalResult) {
                         status = YOU_ARE_SUCCESS;
                         Log.e("plm", "성공,이상");
                     } else {
@@ -126,7 +126,7 @@ public class GoalActivity extends Activity {
                         Log.e("plm", "실패,이상");
                     }
                 } else {
-                    if (Integer.parseInt(goalTime) >= showTotalResult) {
+                    if (goalTimeSecond >= showTotalResult) {
                         status = YOU_ARE_SUCCESS;
                         Log.e("plm", "성공,이하");
                     } else {
