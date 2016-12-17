@@ -120,6 +120,12 @@ public class DBManager extends SQLiteOpenHelper {
     /**
      * 전달받은 시작날짜 종료날짜 사이의 카테고리에 해당하는 총 걸린시간을 더한 값을 return 해주는 메서드
      **/
+
+    
+
+
+
+
     public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);

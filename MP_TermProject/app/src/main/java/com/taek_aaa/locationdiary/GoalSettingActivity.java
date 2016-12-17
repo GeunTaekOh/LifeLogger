@@ -179,17 +179,18 @@ public class GoalSettingActivity extends Activity {
         strContents = editTextContents.getText().toString();
         strHowlong = editHowlongtime.getText().toString();
 
-        if (strContents == null || strHowlong == null) {
+        if (strContents.equals("") || strHowlong.equals("") || biggerOrSmaller.equals("")) {
             Toast.makeText(getBaseContext(), "값을 모두 입력하세요.", Toast.LENGTH_SHORT).show();
         } else {
             goalString = strContents;
             goalTime = strHowlong;
+            editTextContents.setText("");
+            editHowlongtime.setText("");
+            Toast.makeText(getBaseContext(), "목표를 설정하였습니다.", Toast.LENGTH_SHORT).show();
         }
-        editTextContents.setText("");
-        editHowlongtime.setText("");
 
 
-        Toast.makeText(getBaseContext(), "목표를 설정하였습니다.", Toast.LENGTH_SHORT).show();
+
 
     }
 
