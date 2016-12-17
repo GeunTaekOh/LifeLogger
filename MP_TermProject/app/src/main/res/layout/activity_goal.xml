@@ -23,14 +23,14 @@
 
 
             />
+
         <Button
+            android:id="@+id/goalRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/goalRefresh"
-            android:onClick="onClickGoalRefresh"
-            android:text="새로 고침"
             android:layout_marginLeft="180sp"
-            />
+            android:onClick="onClickGoalRefresh"
+            android:text="새로 고침" />
 
     </LinearLayout>
 
@@ -48,6 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="-목표-"
             android:textSize="20sp" />
 
@@ -56,23 +57,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250sp"
         android:layout_gravity="center"
         android:layout_margin="2dp"
         android:background="#ACD1E9"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="2dp">
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp">
 
-            <TextView
-                android:id="@+id/showGoalcontets"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp" />
-        </ScrollView>
+        <TextView
+            android:id="@+id/showGoalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/showGoalcontets"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp" />
 
     </LinearLayout>
 
@@ -86,20 +89,25 @@
         android:orientation="horizontal"
         android:padding="20sp">
 
+        <ImageView
+            android:id="@+id/showResultiv"
+            android:layout_width="wrap_content"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            />
+
         <TextView
             android:id="@+id/showResulttv"
             android:layout_width="wrap_content"
-            android:layout_height="130dp" />
-
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/deleteGoalBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/deleteGoalBtn"
-        android:onClick="onClickDeleteGoal"
-        android:text="목표 삭제"
         android:layout_marginLeft="250sp"
-        />
+        android:onClick="onClickDeleteGoal"
+        android:text="목표 삭제" />
 </LinearLayout>

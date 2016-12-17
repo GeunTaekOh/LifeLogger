@@ -68,6 +68,14 @@ public class GoalSettingActivity extends Activity {
         iDatee = today.get(Calendar.DAY_OF_MONTH);
         hMonthe = today.get(Calendar.MONTH) + 1;
 
+        goalStartYear = iYears;
+        goalStartMonth = hMonths;
+        goalStartDate = iDates;
+        goalEndYear = iYeare;
+        goalEndMonth = hMonthe;
+        goalEndDate = iDatee;
+
+
         startDay.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         endDay.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
 
