@@ -33,6 +33,4 @@ public class DataSet {
     public static int goalEndMonth;
     public static int goalEndDate;
     public static String goalTime = "";
-
-
 }

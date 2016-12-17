@@ -31,6 +31,4 @@ public class ConvertSecondtoTime {
     public String getSecond() {
         return second;
     }
-
-
 }

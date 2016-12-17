@@ -75,10 +75,8 @@ public class GoalSettingActivity extends Activity {
         goalEndMonth = hMonthe;
         goalEndDate = iDatee;
 
-
         startDay.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         endDay.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
-
 
         strContents = editTextContents.getText().toString();        //editText값 내용
         strHowlong = editHowlongtime.getText().toString();          //editText값 몇시간
@@ -90,15 +88,11 @@ public class GoalSettingActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoty_arr_index2 = position;         //목표에서 뽑은 카테고리
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
     }
-
     /**
      * 라디오 어떤 값을 가져왔는지를 확인
      **/
@@ -134,14 +128,12 @@ public class GoalSettingActivity extends Activity {
                 TextView caltv = (TextView) findViewById(R.id.goalStartDate);
                 caltv.setText(year + "년 " + hMonths + "월 " + dayOfMonth + "일");
 
-                iYears = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
+                iYears = year;
                 iMonths = monthOfYear;
                 iDates = dayOfMonth;
                 goalStartYear = year;
                 goalStartMonth = hMonths;
                 goalStartDate = dayOfMonth;
-
-
             }
         };
         new DatePickerDialog(this, dateSetListener, iYears, iMonths, iDates).show();
@@ -161,7 +153,7 @@ public class GoalSettingActivity extends Activity {
                 TextView caltv = (TextView) findViewById(R.id.goalEndDate);
                 caltv.setText(year + "년 " + hMonthe + "월 " + dayOfMonth + "일");
 
-                iYeare = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
+                iYeare = year;
                 iMonthe = monthOfYear;
                 iDatee = dayOfMonth;
                 goalEndYear = year;
@@ -173,6 +165,7 @@ public class GoalSettingActivity extends Activity {
 
     }
 
+    /**목표 설정 버튼**/
     public void onClickGoalSet(View v) {
         editTextContents = (EditText) findViewById(R.id.goalEditText);
         editHowlongtime = (EditText) findViewById(R.id.goalHowTimeEditText);
@@ -188,10 +181,5 @@ public class GoalSettingActivity extends Activity {
             editHowlongtime.setText("");
             Toast.makeText(getBaseContext(), "목표를 설정하였습니다.", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
     }
-
 }

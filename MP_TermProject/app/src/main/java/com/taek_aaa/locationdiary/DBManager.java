@@ -16,8 +16,6 @@ import static com.taek_aaa.locationdiary.DataSet.isUpdate;
 
 public class DBManager extends SQLiteOpenHelper {
 
-     int temptitlenum;
-
     public DBManager(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -121,11 +119,6 @@ public class DBManager extends SQLiteOpenHelper {
      * 전달받은 시작날짜 종료날짜 사이의 카테고리에 해당하는 총 걸린시간을 더한 값을 return 해주는 메서드
      **/
 
-    
-
-
-
-
     public int staticslist(int startYearMonthDate, int endYearMonthDate, int subcategory) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM database", null);
@@ -180,7 +173,6 @@ public class DBManager extends SQLiteOpenHelper {
         String sql =  "UPDATE database SET _id=_id-1 WHERE _id>"+sDeleteIndex;
         db.execSQL(sql);
         cursor.close();
-        //--iter;                                         /**이부분이 의미없음 getiter로 다시 가져오니까 이걸 다른곳에서 구현해야함.*/
         isUpdate = true;
 
     }
@@ -198,4 +190,3 @@ public class DBManager extends SQLiteOpenHelper {
         cursor.close();
     }
 }
-//궤도 다음부분누르면 2개있어도 1개로만움직여짐

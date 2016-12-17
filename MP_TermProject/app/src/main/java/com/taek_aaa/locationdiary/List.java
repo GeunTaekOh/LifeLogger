@@ -62,19 +62,15 @@ public class List extends Activity {
         hMonthe = today.get(Calendar.MONTH) + 1;
         showre = (TextView) findViewById(R.id.showListTextview);
 
-
         startdayTv.setText(iYears + "년 " + hMonths + "월 " + iDates + "일");
         enddayTv.setText(iYeare + "년 " + hMonthe + "월 " + iDatee + "일");
-
 
         mainspinner = (Spinner) findViewById(R.id.mainCategoryspinner);
         subspinner = (Spinner) findViewById(R.id.subCategoryspinner);
         mainspinner.setSelection(0);
         subspinner.setSelection(0);
-
         //메인스피너
         mainspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mainCategory_arr_index = position;
@@ -91,24 +87,19 @@ public class List extends Activity {
                         break;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
         //서브스피너
         subspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 subCategory_arr_index = position;
-
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -133,11 +124,9 @@ public class List extends Activity {
                 TextView caltv = (TextView) findViewById(R.id.Text_StartDay);
                 caltv.setText(year + "년 " + hMonths + "월 " + dayOfMonth + "일");
 
-                iYears = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
+                iYears = year;
                 iMonths = monthOfYear;
                 iDates = dayOfMonth;
-
-
             }
         };
         new DatePickerDialog(this, dateSetListener, iYears, iMonths, iDates).show();
@@ -154,11 +143,9 @@ public class List extends Activity {
                 TextView caltv = (TextView) findViewById(R.id.Text_EndDay);
                 caltv.setText(year + "년 " + hMonthe + "월 " + dayOfMonth + "일");
 
-                iYeare = year;                 //이부분을 하지 않으면 클릭하여서 날짜를 바꾸면 그게 DatePickerDialog에 반영되지 않음
+                iYeare = year;
                 iMonthe = monthOfYear;
                 iDatee = dayOfMonth;
-
-
             }
         };
         new DatePickerDialog(this, dateSetListener, iYeare, iMonthe, iDatee).show();
@@ -171,8 +158,6 @@ public class List extends Activity {
         final int dateend = iYeare * 10000 + iMonthe * 100 + iDatee;
         int parstart = hMonths * 100 + iDates;
         int parend = hMonthe * 100 + iDatee;
-
-        // TextView showre = (TextView)findViewById(R.id.showListTextview);
 
         if (datestart > dateend) {
             Toast.makeText(this, "잘못된 입력이 있습니다.", Toast.LENGTH_SHORT).show();
@@ -209,12 +194,7 @@ public class List extends Activity {
 
             mypieChart = new PieChartClass(pieChart) ;
             mypieChart.setyData(numForGraph);
-
-
             mypieChart.addData();
-
         }
     }
-
-
 }

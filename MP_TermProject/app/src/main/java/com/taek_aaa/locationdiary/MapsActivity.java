@@ -1,6 +1,5 @@
 package com.taek_aaa.locationdiary;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,10 +12,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,23 +35,21 @@ import static com.taek_aaa.locationdiary.DataSet.moveCameraIter;
 import static com.taek_aaa.locationdiary.DataSet.sllDBData;
 
 
-/**  맵으로 보기 눌렀을 때  **/
+/**
+ * 맵으로 보기 눌렀을 때
+ **/
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     final DBManager dbManager = new DBManager(this, "logger.db", null, 1);
     private GoogleMap mMap;
-    LinearLayout type_ll;
     static int temp;
     Bitmap photo;
     final int PICK_FROM_ALBUM = 101;
     AlertDialog tempad;
-    Dialog dialog;
     public static ImageView imageView;
     Button moveCameraBtn;
     CircleOptions circle;
-    String photo_str;
-    ViewGroup.LayoutParams layoutParams;
     public static LayoutInflater inflater;
-    public  View dialogView;
+    public View dialogView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +62,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    /**  사진 추가 버튼을 눌러서 intent의 결과를 받는 부분 **/
+    /**
+     * 사진 추가 버튼을 눌러서 intent의 결과를 받는 부분
+     **/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -75,12 +72,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     Uri uri = data.getData();
                     photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    inflater=getLayoutInflater();
-                    dialogView= inflater.inflate(R.layout.activity_dialog, null);
+                    inflater = getLayoutInflater();
+                    dialogView = inflater.inflate(R.layout.activity_dialog, null);
                     imageView = (ImageView) dialogView.findViewById(R.id.imageview);
                     imageView.setImageBitmap(photo);
 
-                    Toast.makeText(getBaseContext(),"사진을 저장하였습니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "사진을 저장하였습니다.", Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
                     e.getStackTrace();
@@ -91,15 +88,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         sllDBData.clear();
-        //dbManager.update();
         dbManager.getResult(sllDBData);
-        Log.e("slldbdata의 크기",""+sllDBData.size());
+        Log.e("slldbdata의 크기", "" + sllDBData.size());
         moveCameraIter = 0;
-
         mMap = googleMap;
         iter = dbManager.getIter();
 
-       try {
+        try {
             Log.e("value", String.valueOf(itc.getIteration()));
             for (int i = 0; i < sllDBData.size(); i++) {
                 Log.e("value", String.valueOf(sllDBData.get(i).curlatitude));
@@ -111,23 +106,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.e("value", sllDBData.get(i).curText);
                 Log.e("value", sllDBData.get(i).curTime);
             }
-           for(int i=0; i<sllDBData.size();i++){
-               sllDBData.get(i).curNum=""+i;
-           }
+            for (int i = 0; i < sllDBData.size(); i++) {
+                sllDBData.get(i).curNum = "" + i;
+            }
 
             for (int i = 0; i < sllDBData.size(); i++) {
                 MarkerOptions opt = new MarkerOptions();
                 opt.position(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude));
                 opt.title(sllDBData.get(i).curNum);
                 opt.snippet(sllDBData.get(i).curText + "@" + sllDBData.get(i).curTime);
-                if(sllDBData.get(i).curTodoOrEvent.equals("Event")){
-                     circle = new CircleOptions().center(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)) //원점
+                if (sllDBData.get(i).curTodoOrEvent.equals("Event")) {
+                    circle = new CircleOptions().center(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)) //원점
                             .radius(10)      //반지름 단위 : m
                             .strokeWidth(0f)  //선너비 0f : 선없음
                             .fillColor(Color.parseColor("#880000ff"));
 
 
-                }else {
+                } else {
                     circle = new CircleOptions().center(new LatLng(sllDBData.get(i).curlatitude, sllDBData.get(i).curlongitude)) //원점
                             .radius(0)
                             .strokeWidth(0f);
@@ -151,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     int a = Integer.valueOf(marker.getTitle());
                     ConvertSecondtoTime cst = new ConvertSecondtoTime();
-                    Log.e("현재 클릭한 마커의 제목의 타이틀",""+a);
+                    Log.e("현재 클릭한 마커의 제목의 타이틀", "" + a);
                     cst.transferTime(sllDBData.get(a).curHowLong);
                     String h = cst.getHour();
                     String m = cst.getMinute();
@@ -183,17 +178,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .setNegativeButton("삭제", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    dbManager.delete(sllDBData.get(temp).curlatitude,sllDBData.get(temp).curlongitude);
+                                    dbManager.delete(sllDBData.get(temp).curlatitude, sllDBData.get(temp).curlongitude);
                                     Toast.makeText(MapsActivity.this, "정상적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     sllDBData.clear();
                                     dbManager.idUpdate(temp);
                                     dbManager.titleUpdate(temp);
                                     dbManager.getResult(sllDBData);
-                                    Log.e("ogt","삭제후 총 iter : " + dbManager.getIter());
-                                    Intent moveToMap = new Intent (getApplicationContext(), MapsActivity.class);
+                                    Log.e("ogt", "삭제후 총 iter : " + dbManager.getIter());
+                                    Intent moveToMap = new Intent(getApplicationContext(), MapsActivity.class);
                                     startActivity(moveToMap);
-                                    for(int i=0; i<sllDBData.size();i++){
-                                        sllDBData.get(i).curNum=""+i;
+                                    for (int i = 0; i < sllDBData.size(); i++) {
+                                        sllDBData.get(i).curNum = "" + i;
                                     }
                                     onMapReady(mMap);
                                     finish();
@@ -210,25 +205,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
         } catch (Exception e) {
             e.getMessage();
-            Log.e("ogt",""+e);
+            Log.e("ogt", "" + e);
             Toast.makeText(this, "먼저 값을 받아주세요.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    /** 궤적 보기 버튼을 눌렀을 때 **/
+    /**
+     * 궤적 보기 버튼을 눌렀을 때
+     **/
     public void onClickMoveCamera(View v) {
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        moveCameraBtn = (Button)findViewById(R.id.moveCamerabtn) ;
+        moveCameraBtn = (Button) findViewById(R.id.moveCamerabtn);
         iter = dbManager.getIter();
 
 
         if (moveCameraIter == sllDBData.size()) {
-            Toast.makeText(this, "마지막 궤적입니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "마지막 궤적입니다.", Toast.LENGTH_SHORT).show();
             moveCameraBtn.setText("궤적보기");
             moveCameraIter = 0;
 
-        }else {
+        } else {
             moveCameraBtn.setText("다음");
             mMap.moveCamera(newLatLng(new LatLng(sllDBData.get(moveCameraIter).curlatitude, sllDBData.get(moveCameraIter).curlongitude)));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2500, null);
@@ -239,8 +236,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /** 사진 촬영 버튼 눌렀을 때 **/
-    public void onClickPicture(View v){
+    /**
+     * 사진 촬영 버튼 눌렀을 때
+     **/
+    public void onClickPicture(View v) {
         Intent intent = new Intent();
         intent.setAction("android.media.action.IMAGE_CAPTURE");
         startActivity(intent);

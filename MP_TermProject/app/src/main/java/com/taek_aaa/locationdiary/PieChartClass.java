@@ -73,6 +73,4 @@ public class PieChartClass extends Activity{
             this.yData[i] = yData[i] ;
         }
     }
-    ///이걸 쓰고싶은곳에서 이걸 불러와서 디비매니저에서 total time을 다 불러와서 y에 넣고 출력하는 식으로 짜야할듯
-
 }
