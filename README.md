@@ -1,4 +1,4 @@
-# LocationDiary
+# LifeLogger
 ## Mobile Programming TermProject
 
 ---
